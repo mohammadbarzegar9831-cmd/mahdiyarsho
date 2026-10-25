@@ -3,7 +3,7 @@
 **وب‌سایت استاتیک چندصفحه‌ای برای مرور احکام اجتماعی و اندیشه‌های اعتقادی،
 با طراحی تیرهٔ لوکس و انیمیشن‌های ملایم.**
 
-🔗 مشاهده آنلاین: [https://USERNAME.github.io/REPO/](https://USERNAME.github.io/REPO/)
+🔗 مشاهده آنلاین: [https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/](https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/)
 
 ---
 
@@ -37,7 +37,7 @@
 ### اجرای محلی
 
 ```bash
-git clone https://github.com/USERNAME/REPO.git
+git clone https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho.git
 cd REPO
 ```
 
