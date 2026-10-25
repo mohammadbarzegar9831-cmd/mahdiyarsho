@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مهدیارشو | خانه</title>
+<style>html{background:#080d18}</style>
+<link rel="preload" href="assets/images/logo.svg" as="image" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+.hero-fix{display:block;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:48px}
+.feature-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card-list{list-style:none;padding:0;margin:0 0 28px;font-size:13px;color:var(--muted)}
+.card-list li{padding:5px 0;border-bottom:1px solid var(--line2)}
+.card-list li:last-child{border-bottom:none}
+.text-link-teal{color:var(--teal)}
+@media(max-width:760px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-grid .hero-art{grid-row:1;max-width:420px;width:100%;margin:0 auto 18px}
+  .feature-grid-3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body id="top">
+
+<div class="grain"></div>
+
+<!-- نوار بالا -->
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark">
+      <img src="assets/images/logo.svg" alt="مهدیارشو" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+    </span>
+    <span>مهدیارشو</span>
+  </a>
+  <nav class="main-nav">
+    <a href="index.html" class="active">خانه</a>
+    <a href="ahkam.html">احکام</a>
+    <a href="aqeedeh.html">اعتقادی</a>
+    <a href="ertebat.html">ارتباط مؤثر</a>
+    <button class="search-trigger" data-search-open>
+      <span>⌕</span> جست‌وجو
+    </button>
+  </nav>
+</header>
+
+<!-- هیرو -->
+<section class="hero hero-fix">
+  <div class="wrap hero-grid">
+
+    <div class="hero-copy">
+      <h1 class="reveal">مهدیار<span>شو</span></h1>
+      <p class="hero-lead reveal" style="transition-delay:.12s">
+        از <em>احکام اجتماعی</em> تا پرسش <em>هدف از خلقت انسان</em> و رفتار با دیگران؛
+        سه بخش برای مرور موضوع‌ها و اندیشه‌ها.
+      </p>
+      <div class="hero-actions reveal" style="transition-delay:.22s">
+        <a href="ahkam.html" class="button button-gold">ورود به احکام <span>✓</span></a>
+        <a href="aqeedeh.html" class="text-link">ورود به اعتقادی <span>←</span></a>
+        <a href="ertebat.html" class="text-link text-link-teal">ورود به ارتباط مؤثر <span>←</span></a>
+      </div>
+    </div>
+
+    <div class="hero-art reveal" style="transition-delay:.15s">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="orb-core">
+        <img src="assets/images/logo.svg" alt="مهدیارشو" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wrap hero-bottom reveal" style="transition-delay:.35s">
+    <span>احکام اجتماعی</span>
+    <i></i>
+    <span>علم و حکمت الهی</span>
+    <i></i>
+    <span>ارتباط مؤثر</span>
+  </div>
+</section>
+
+<!-- فهرست موضوعات -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-heading reveal">
+      <div>
+        <p class="kicker"><span class="kicker-line"></span>فهرست موضوعات</p>
+        <h2>سه بخش اصلی</h2>
+      </div>
+    </div>
+
+    <div class="feature-grid-3">
+
+      <a href="ahkam.html" class="feature-card reveal">
+        <div class="card-top">
+          <span class="serial">۰۱</span>
+          <span class="card-arrow">←</span>
+        </div>
+        <span class="card-symbol">◈</span>
+        <h3>احکام اجتماعی</h3>
+        <p>آشنایی با ۸ موضوع از احکام اجتماعی</p>
+        <div class="card-footer">
+          <span>۸ موضوع</span>
+          <span class="line"></span>
+          <span>ورود به بخش</span>
+        </div>
+      </a>
+
+      <a href="aqeedeh.html" class="feature-card feature-card-teal reveal" style="transition-delay:.1s">
+        <div class="card-top">
+          <span class="serial">۰۲</span>
+          <span class="card-arrow">←</span>
+        </div>
+        <span class="card-symbol">✦</span>
+        <h3>اعتقادی</h3>
+        <ul class="card-list">
+          <li>علم و حکمت الهی</li>
+          <li>مهربانی و رافت خدا</li>
+          <li>خواست و قدرت الهی</li>
+        </ul>
+        <div class="card-footer">
+          <span>۳ فصل</span>
+          <span class="line"></span>
+          <span>ورود به بخش</span>
+        </div>
+      </a>
+
+      <a href="ertebat.html" class="feature-card reveal" style="transition-delay:.2s">
+        <div class="card-top">
+          <span class="serial">۰۳</span>
+          <span class="card-arrow">←</span>
+        </div>
+        <span class="card-symbol">◆</span>
+        <h3>ارتباط مؤثر</h3>
+        <p>انواع ارتباط برقرار کردن و هنر فن بیان</p>
+        <div class="card-footer">
+          <span>۲ موضوع</span>
+          <span class="line"></span>
+          <span>ورود به بخش</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- کارت نقل‌قول چرخشی -->
+<section class="quote-band">
+  <div class="wrap quote-inner reveal">
+    <span class="quote-mark">“</span>
+    <div>
+      <p class="kicker"><span class="kicker-line"></span><span data-quote-kicker>از بخش اعتقادی</span></p>
+      <h2 data-quote-title>خدا هم بی‌نیاز است و هم بخشنده است.</h2>
+      <p data-quote-sub>علم خداوند فراوان است.</p>
+    </div>
+    <a class="round-link" href="hadaf.html" data-quote-link>←</a>
+  </div>
+</section>
+
+<!-- فوتر -->
+<footer class="footer wrap">
+  <a class="brand brand-small" href="index.html">
+    <span class="brand-mark">
+      <img src="assets/images/logo.svg" alt="مهدیارشو" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+    </span>
+    <span>مهدیارشو</span>
+  </a>
+  <span>احکام · اعتقادی · ارتباط مؤثر</span>
+  <a href="#top" class="back-top">بازگشت به بالا ↑</a>
+</footer>
+
+<!-- لایه جست‌وجو -->
+<div class="search-layer" hidden>
+  <div class="search-panel">
+    <div class="search-head">
+      <span>جست‌وجو در مهدیارشو</span>
+      <button data-search-close>×</button>
+    </div>
+    <div class="search-input-wrap">
+      <span>⌕</span>
+      <input type="text" data-search-input placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
+    </div>
+    <div class="search-results" data-search-results>
+      <p class="search-hint">مثلاً: همسایه‌داری، علم و حکمت، هدف انسان</p>
+    </div>
+    <p class="search-foot">برای بستن، کلید Escape را بزن.</p>
+  </div>
+</div>
+
+<!-- چرخش کارت نقل‌قول -->
+<script>
+(function(){
+  const quotes=[
+    {k:'از بخش اعتقادی', t:'خدا هم بی‌نیاز است و هم بخشنده است.', s:'علم خداوند فراوان است.', u:'hadaf.html'},
+    {k:'از بخش احکام', t:'امر به معروف و نهی از منکر؛ مسئولیت همگانی جامعه.', s:'هشت موضوع برای مرور احکام اجتماعی.', u:'ahkam.html'},
+    {k:'از بخش ارتباط مؤثر', t:'رفتار با دیگران، بخشی از همین مسیر اندیشه است.', s:'انواع ارتباط برقرار کردن و هنر فن بیان.', u:'ertebat.html'}
+  ];
+  let i=0;
+  try{
+    i=(parseInt(localStorage.getItem('mahdiQuote')||'0',10)+1)%quotes.length;
+    localStorage.setItem('mahdiQuote',String(i));
+  }catch(e){
+    i=Math.floor(Math.random()*quotes.length);
+  }
+  const q=quotes[i];
+  const g=s=>document.querySelector(s);
+  if(g('[data-quote-kicker]')){
+    g('[data-quote-kicker]').textContent=q.k;
+    g('[data-quote-title]').textContent=q.t;
+    g('[data-quote-sub]').textContent=q.s;
+    g('[data-quote-link]').setAttribute('href',q.u);
+  }
+})();
+</script>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
