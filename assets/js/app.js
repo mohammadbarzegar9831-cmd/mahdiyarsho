@@ -17,7 +17,11 @@
     {title:'هدف خلقت انسان است',desc:'علم و حکمت الهی · زیرموضوع اول',url:'hadaf.html#creation',terms:'هدف خلقت انسان آفرینش خدا شباهت علم'},
     {title:'خدا و انسان شباهت ندارند',desc:'هدف خلقت انسان · شناخت خدا',url:'hadaf.html#creation',terms:'شباهت خدا انسان تصویر علم خدا'},
     {title:'تفاوت هدف خدا با انسان',desc:'علم و حکمت الهی · زیرموضوع دوم',url:'hadaf.html#human-god-goal',terms:'تفاوت هدف انسان خدا بی نیاز کمال'},
-    {title:'نتیجه‌گیری بخش اعتقادی',desc:'خدا بی‌نیاز و بخشنده است',url:'hadaf.html#human-god-goal',terms:'نتیجه علم فراوان خدا بخشنده بی نیاز'}
+    {title:'نتیجه‌گیری بخش اعتقادی',desc:'خدا بی‌نیاز و بخشنده است',url:'hadaf.html#human-god-goal',terms:'نتیجه علم فراوان خدا بخشنده بی نیاز'},
+    {title:'رشد فردی',desc:'بخش چهارم · فهرست فصل‌ها',url:'roshd.html',terms:'رشد فردی رشد'},
+    {title:'قدرت تمرکز',desc:'رشد فردی · فصل اول',url:'tamarkoz.html',terms:'تمرکز اراده توجه فواید تمرکز'},
+    {title:'شرایط امر به معروف و نهی از منکر',desc:'احکام · موضوع اول',url:'amr-marouf.html',terms:'شرایط امر معروف نهی منکر یقین احتمال تاثیر اصرار معذور'},
+    {title:'افزایش سرعت دسترسی به واژگان',desc:'ارتباط مؤثر · فن بیان',url:'fan-bayan.html',terms:'واژگان تمرین رنگ جنس اجزا شکل حس'},
   ];
   const layer = document.querySelector('.search-layer');
   const input = document.querySelector('[data-search-input]');
