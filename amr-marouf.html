@@ -4,40 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>امر به معروف و نهی از منکر | مهدیارشو</title>
-<style>html{background:#080d18}</style>
-<link rel="preload" href="assets/images/logo.svg" as="image" fetchpriority="high">
+<meta name="description" content="مرور آموزشی امر به معروف و نهی از منکر، مراحل تذکر و شرایط آن در مهدیارشو.">
+<link rel="preload" href="assets/images/logo.webp" as="image" fetchpriority="high" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body id="top">
+<a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
 
 <div class="grain"></div>
 
 <header class="topbar">
   <a class="brand" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" fetchpriority="high" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
-  <nav class="main-nav">
+  <button class="menu-toggle" type="button" data-menu-toggle aria-controls="site-navigation" aria-expanded="false" aria-label="باز کردن منوی اصلی"><span aria-hidden="true">☰</span></button>
+  <nav class="main-nav" id="site-navigation" aria-label="ناوبری اصلی">
     <a href="index.html">خانه</a>
-    <a href="ahkam.html" class="active-sub">احکام</a>
+    <a href="ahkam.html" class="active-sub" aria-current="location">احکام</a>
     <a href="aqeedeh.html">اعتقادی</a>
     <a href="ertebat.html">ارتباط مؤثر</a>
     <a href="roshd.html">رشد فردی</a>
-    <button class="search-trigger" data-search-open>
+    <button type="button" class="search-trigger" data-search-open>
       <span>⌕</span> جست‌وجو
     </button>
   </nav>
 </header>
 
-<main class="page-main">
+<main id="main-content" class="page-main">
   <div class="wrap">
 
-    <nav class="breadcrumb reveal">
+    <nav class="breadcrumb reveal" aria-label="مسیر راهنما">
       <a href="index.html">خانه</a>
       <span>/</span>
       <a href="ahkam.html">احکام</a>
@@ -46,7 +48,7 @@
     </nav>
 
     <section class="page-hero reveal">
-      <span class="page-hero-index">01.1 <span>/ موضوع اول احکام</span></span>
+      <span class="page-hero-index">۰۱.۱ <span>/ موضوع اول احکام</span></span>
       <p class="kicker"><span class="kicker-line"></span>بخش احکام · موضوع اول</p>
       <h1>امر به معروف <span>و نهی از منکر</span></h1>
       <p>یعنی کمک به دیگران؛ و اگر کسی کار بدی می‌کند، با احترام به او بگوییم این کار را نکن.</p>
@@ -54,7 +56,7 @@
 
     <section class="idea-section">
       <div class="idea-heading reveal">
-        <span class="large-index">01</span>
+        <span class="large-index">۰۱</span>
         <h2>تذکر به دیگران</h2>
       </div>
       <div class="idea-body">
@@ -80,7 +82,7 @@
     </section>
     <section class="idea-section">
       <div class="idea-heading reveal">
-        <span class="large-index">02</span>
+        <span class="large-index">۰۲</span>
         <h2>شرایط امر به معروف و نهی از منکر</h2>
       </div>
       <div class="idea-body">
@@ -149,7 +151,7 @@
 <footer class="footer wrap">
   <a class="brand brand-small" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
@@ -157,17 +159,17 @@
   <a href="#top" class="back-top">بازگشت به بالا ↑</a>
 </footer>
 
-<div class="search-layer" hidden>
+<div class="search-layer" hidden role="dialog" aria-modal="true" aria-labelledby="search-dialog-title">
   <div class="search-panel">
     <div class="search-head">
-      <span>جست‌وجو در مهدیارشو</span>
-      <button data-search-close>×</button>
+      <span id="search-dialog-title">جست‌وجو در مهدیارشو</span>
+      <button type="button" data-search-close aria-label="بستن جست‌وجو">×</button>
     </div>
     <div class="search-input-wrap">
       <span>⌕</span>
-      <input type="text" data-search-input placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
+      <input type="text" data-search-input aria-label="عبارت جست‌وجو" aria-controls="search-results" placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
     </div>
-    <div class="search-results" data-search-results>
+    <div class="search-results" id="search-results" data-search-results role="status" aria-live="polite" aria-relevant="additions text">
       <p class="search-hint">مثلاً: همسایه‌داری، علم و حکمت، هدف انسان</p>
     </div>
     <p class="search-foot">برای بستن، کلید Escape را بزن.</p>

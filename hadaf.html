@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>هدف خلقت انسان | مهدیارشو</title>
-<style>html{background:#080d18}</style>
-<link rel="preload" href="assets/images/logo.svg" as="image" fetchpriority="high">
+<meta name="description" content="نگاهی به تفاوت خدا و انسان و تفاوت هدف انسان با آفرینش الهی در بخش اعتقادی مهدیارشو.">
+<link rel="preload" href="assets/images/logo.webp" as="image" fetchpriority="high" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body id="top">
+<a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
 
 <div class="grain"></div>
 
@@ -19,27 +20,28 @@
 <header class="topbar">
   <a class="brand" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" fetchpriority="high" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
-  <nav class="main-nav">
+  <button class="menu-toggle" type="button" data-menu-toggle aria-controls="site-navigation" aria-expanded="false" aria-label="باز کردن منوی اصلی"><span aria-hidden="true">☰</span></button>
+  <nav class="main-nav" id="site-navigation" aria-label="ناوبری اصلی">
     <a href="index.html">خانه</a>
     <a href="ahkam.html">احکام</a>
-    <a href="aqeedeh.html" class="active-sub">اعتقادی</a>
+    <a href="aqeedeh.html" class="active-sub" aria-current="location">اعتقادی</a>
     <a href="ertebat.html">ارتباط مؤثر</a>
     <a href="roshd.html">رشد فردی</a>
-    <button class="search-trigger" data-search-open>
+    <button type="button" class="search-trigger" data-search-open>
       <span>⌕</span> جست‌وجو
     </button>
   </nav>
 </header>
 
-<main class="page-main">
+<main id="main-content" class="page-main">
   <div class="wrap">
 
     <!-- مسیر راهنما -->
-    <nav class="breadcrumb reveal">
+    <nav class="breadcrumb reveal" aria-label="مسیر راهنما">
       <a href="index.html">خانه</a>
       <span>/</span>
       <a href="aqeedeh.html">اعتقادی</a>
@@ -49,16 +51,16 @@
 
     <!-- هدر صفحه -->
     <section class="page-hero page-hero-teal reveal">
-      <span class="page-hero-index">01.1 <span>/ فصل اول اعتقادی</span></span>
+      <span class="page-hero-index">۰۱.۱ <span>/ فصل اول اعتقادی</span></span>
       <p class="kicker"><span class="kicker-line"></span>بخش اعتقادی · علم و حکمت الهی</p>
       <h1>هدف <span>خلقت انسان</span></h1>
       <p>شناخت تفاوت خدا و انسان، و تفاوت هدف انسان با خدا.</p>
     </section>
 
     <!-- زیرموضوع اول -->
-    <section class="idea-section">
+    <section class="idea-section" id="creation">
       <div class="idea-heading reveal">
-        <span class="large-index">01</span>
+        <span class="large-index">۰۱</span>
         <h2>شناخت تفاوت خدا و انسان</h2>
       </div>
       <div class="idea-body">
@@ -67,8 +69,8 @@
         <div class="insight-card reveal">
           <span class="insight-icon">✦</span>
           <div>
-            <h3>خدا و شباهت ندارند</h3>
-            <p>خدا با هیچ عکس و تصویری شبیه نیست؛ اگر موجودات کوچک‌ترین شراکت یا شباهتی با خدا داشته باشند، ممکن است خدا را درست نشناخته باشیم و درباره‌ی او نادرست قضاوت کنیم.</p>
+            <h3>خدا و انسان شباهت ندارند</h3>
+            <p>خدا با هیچ عکس و تصویری شبیه نیست؛ اگر موجودات کوچک‌ترین شراکت یا شباهتی با خدا داشته باشند، در شناخت خدا دچار اشتباه شده‌ایم.</p>
           </div>
         </div>
 
@@ -88,9 +90,9 @@
     </section>
 
     <!-- زیرموضوع دوم -->
-    <section class="idea-section">
+    <section class="idea-section" id="human-god-goal">
       <div class="idea-heading reveal">
-        <span class="large-index">02</span>
+        <span class="large-index">۰۲</span>
         <h2>تفاوت هدف انسان با خدا</h2>
       </div>
       <div class="idea-body">
@@ -101,15 +103,15 @@
           <div class="reason-card reveal">
             <span>۰۱</span>
             <div>
-              <h3>انسان هدف دارد، خدا بی‌نیاز است</h3>
-              <p>انسان برای رسیدن به کمال هدف‌گذاری می‌کند؛ اما خداوند بی‌نیاز است.</p>
+              <h3>انسان از سرِ نیاز هدف‌گذاری می‌کند</h3>
+              <p>انسان برای رسیدن به کمالی که هنوز ندارد حرکت می‌کند؛ خداوند بی‌نیاز است و برای رفع نیاز خود هدف‌گذاری نمی‌کند.</p>
             </div>
           </div>
           <div class="reason-card reveal" style="transition-delay:.08s">
             <span>۰۲</span>
             <div>
-              <h3>هدف انسان از نیاز است، هدف خدا از بخشش</h3>
-              <p>انسان برای پر کردن نقصی حرکت می‌کند؛ خداوند از سرِ گستردگی رحمت می‌بخشد.</p>
+              <h3>بهرهٔ آفرینش به مخلوقات می‌رسد</h3>
+              <p>انسان معمولاً برای رسیدن به نتیجه‌ای که به او کمک می‌کند هدف‌گذاری می‌کند؛ اما آفرینش خداوند چیزی به کمال او اضافه نمی‌کند و خیر و کمال آن به مخلوقات می‌رسد.</p>
             </div>
           </div>
           <div class="reason-card reveal" style="transition-delay:.16s">
@@ -148,7 +150,7 @@
 <footer class="footer wrap">
   <a class="brand brand-small" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" fetchpriority="high" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
@@ -157,17 +159,17 @@
 </footer>
 
 <!-- لایه جست‌وجو -->
-<div class="search-layer" hidden>
+<div class="search-layer" hidden role="dialog" aria-modal="true" aria-labelledby="search-dialog-title">
   <div class="search-panel">
     <div class="search-head">
-      <span>جست‌وجو در مهدیارشو</span>
-      <button data-search-close>×</button>
+      <span id="search-dialog-title">جست‌وجو در مهدیارشو</span>
+      <button type="button" data-search-close aria-label="بستن جست‌وجو">×</button>
     </div>
     <div class="search-input-wrap">
       <span>⌕</span>
-      <input type="text" data-search-input placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
+      <input type="text" data-search-input aria-label="عبارت جست‌وجو" aria-controls="search-results" placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
     </div>
-    <div class="search-results" data-search-results>
+    <div class="search-results" id="search-results" data-search-results role="status" aria-live="polite" aria-relevant="additions text">
       <p class="search-hint">مثلاً: همسایه‌داری، علم و حکمت، هدف انسان</p>
     </div>
     <p class="search-foot">برای بستن، کلید Escape را بزن.</p>

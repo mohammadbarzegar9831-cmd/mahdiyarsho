@@ -4,81 +4,69 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>رشد فردی | مهدیارشو</title>
-<style>html{background:#080d18}</style>
-<link rel="preload" href="assets/images/logo.svg" as="image" fetchpriority="high">
+<meta name="description" content="بخش رشد فردی مهدیارشو؛ شامل یک فصل با موضوع قدرت تمرکز.">
+<link rel="preload" href="assets/images/logo.webp" as="image" fetchpriority="high" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body id="top">
+<a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
 
 <div class="grain"></div>
 
 <header class="topbar">
   <a class="brand" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" fetchpriority="high" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
-  <nav class="main-nav">
+  <button class="menu-toggle" type="button" data-menu-toggle aria-controls="site-navigation" aria-expanded="false" aria-label="باز کردن منوی اصلی"><span aria-hidden="true">☰</span></button>
+  <nav class="main-nav" id="site-navigation" aria-label="ناوبری اصلی">
     <a href="index.html">خانه</a>
     <a href="ahkam.html">احکام</a>
     <a href="aqeedeh.html">اعتقادی</a>
     <a href="ertebat.html">ارتباط مؤثر</a>
-    <a href="roshd.html" class="active">رشد فردی</a>
-    <button class="search-trigger" data-search-open>
+    <a href="roshd.html" class="active" aria-current="page">رشد فردی</a>
+    <button type="button" class="search-trigger" data-search-open>
       <span>⌕</span> جست‌وجو
     </button>
   </nav>
 </header>
 
-<main class="page-main">
+<main id="main-content" class="page-main">
   <div class="wrap">
 
-    <nav class="breadcrumb reveal">
+    <nav class="breadcrumb reveal" aria-label="مسیر راهنما">
       <a href="index.html">خانه</a>
       <span>/</span>
       <span>رشد فردی</span>
     </nav>
 
     <section class="page-hero page-hero-teal reveal">
-      <span class="page-hero-index">04 <span>/ 04</span></span>
+      <span class="page-hero-index">۰۴ <span>/ ۰۴</span></span>
       <p class="kicker"><span class="kicker-line"></span>بخش چهارم · رشد فردی</p>
       <h1>رشد <span>فردی</span></h1>
-      <p>فصل‌هایی برای تقویت تمرکز و مهارت‌های فردی؛ اکنون یک فصل.</p>
+      <p>این بخش یک فصل دارد: قدرت تمرکز.</p>
     </section>
 
     <section class="topics-section">
       <div class="section-heading reveal">
-        <h2>فصل‌های بخش</h2>
+        <h2>فصل فعلی</h2>
       </div>
 
-      <div class="belief-grid">
+      <div class="belief-grid belief-grid-single">
         <a class="belief-card belief-card-feature reveal" href="tamarkoz.html" style="text-decoration:none;color:inherit">
-          <span class="belief-number">01</span>
+          <span class="belief-number">۰۱</span>
           <span class="belief-symbol">✦</span>
           <h3>قدرت تمرکز</h3>
           <p>تمرکز یعنی چه و چه فوایدی دارد؛ چه کسی تمرکز را به هم می‌ریزد؟</p>
           <span class="text-link">قدرت تمرکز <span>←</span></span>
         </a>
-        <div class="belief-card reveal" style="transition-delay:.1s">
-          <span class="belief-number">02</span>
-          <span class="belief-symbol">✧</span>
-          <h3>فصل‌های جدید</h3>
-          <p class="coming-note">فصل‌های دیگر این بخش به‌زودی اضافه می‌شوند.</p>
-        </div>
       </div>
 
-      <div class="subtopics-strip reveal">
-        <h2>زیرموضوع‌های فصل اول</h2>
-        <a class="subtopic-link" href="tamarkoz.html">
-          <span>01</span>
-          <span>قدرت تمرکز</span>
-          <span>←</span>
-        </a>
-      </div>
     </section>
 
     <div class="page-next reveal">
@@ -107,7 +95,7 @@
 <footer class="footer wrap">
   <a class="brand brand-small" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
@@ -115,17 +103,17 @@
   <a href="#top" class="back-top">بازگشت به بالا ↑</a>
 </footer>
 
-<div class="search-layer" hidden>
+<div class="search-layer" hidden role="dialog" aria-modal="true" aria-labelledby="search-dialog-title">
   <div class="search-panel">
     <div class="search-head">
-      <span>جست‌وجو در مهدیارشو</span>
-      <button data-search-close>×</button>
+      <span id="search-dialog-title">جست‌وجو در مهدیارشو</span>
+      <button type="button" data-search-close aria-label="بستن جست‌وجو">×</button>
     </div>
     <div class="search-input-wrap">
       <span>⌕</span>
-      <input type="text" data-search-input placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
+      <input type="text" data-search-input aria-label="عبارت جست‌وجو" aria-controls="search-results" placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
     </div>
-    <div class="search-results" data-search-results>
+    <div class="search-results" id="search-results" data-search-results role="status" aria-live="polite" aria-relevant="additions text">
       <p class="search-hint">مثلاً: همسایه‌داری، علم و حکمت، هدف انسان</p>
     </div>
     <p class="search-foot">برای بستن، کلید Escape را بزن.</p>

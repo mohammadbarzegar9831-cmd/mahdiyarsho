@@ -4,40 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>فن بیان | مهدیارشو</title>
-<style>html{background:#080d18}</style>
-<link rel="preload" href="assets/images/logo.svg" as="image" fetchpriority="high">
+<meta name="description" content="تمرین خوب دیدن و تقویت دایره واژگان، سرعت دسترسی به کلمات و اطلاعات عمومی برای فن بیان.">
+<link rel="preload" href="assets/images/logo.webp" as="image" fetchpriority="high" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body id="top">
+<a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
 
 <div class="grain"></div>
 
 <header class="topbar">
   <a class="brand" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" fetchpriority="high" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
-  <nav class="main-nav">
+  <button class="menu-toggle" type="button" data-menu-toggle aria-controls="site-navigation" aria-expanded="false" aria-label="باز کردن منوی اصلی"><span aria-hidden="true">☰</span></button>
+  <nav class="main-nav" id="site-navigation" aria-label="ناوبری اصلی">
     <a href="index.html">خانه</a>
     <a href="ahkam.html">احکام</a>
     <a href="aqeedeh.html">اعتقادی</a>
-    <a href="ertebat.html" class="active-sub">ارتباط مؤثر</a>
+    <a href="ertebat.html" class="active-sub" aria-current="location">ارتباط مؤثر</a>
     <a href="roshd.html">رشد فردی</a>
-    <button class="search-trigger" data-search-open>
+    <button type="button" class="search-trigger" data-search-open>
       <span>⌕</span> جست‌وجو
     </button>
   </nav>
 </header>
 
-<main class="page-main">
+<main id="main-content" class="page-main">
   <div class="wrap">
 
-    <nav class="breadcrumb reveal">
+    <nav class="breadcrumb reveal" aria-label="مسیر راهنما">
       <a href="index.html">خانه</a>
       <span>/</span>
       <a href="ertebat.html">ارتباط مؤثر</a>
@@ -46,7 +48,7 @@
     </nav>
 
     <section class="page-hero page-hero-teal reveal">
-      <span class="page-hero-index">03.1 <span>/ زیرموضوع حرف زدن</span></span>
+      <span class="page-hero-index">۰۳.۱ <span>/ زیرموضوع حرف زدن</span></span>
       <p class="kicker"><span class="kicker-line"></span>بخش ارتباط مؤثر · حرف زدن</p>
       <h1>فن <span>بیان</span></h1>
       <p>چون حرف زدن مهم‌ترین ابزار ارتباط است، فن بیان از بقیه مهم‌تر است.</p>
@@ -54,81 +56,74 @@
 
     <section class="idea-section">
       <div class="idea-heading reveal">
-        <span class="large-index">01</span>
-        <h2>خوب دیدن</h2>
+        <span class="large-index">۰۱</span>
+        <h2>افزایش دایرهٔ کلمات یا افزایش سرعت دسترسی به واژگان</h2>
       </div>
       <div class="idea-body">
-        <p class="lead reveal">خوب دیدن یعنی آن‌قدر دقت به اطراف را بالا ببریم که بتوانیم اسم تمام چیزهایی که دور و برمان هست را بگوییم.</p>
+        <p class="lead reveal">یکی از راه‌های تقویت دایرهٔ کلمات، خوب دیدن است؛ یعنی آن‌قدر به اطرافمان دقت کنیم که بتوانیم نام چیزهایی را که دوروبرمان هستند، بیان کنیم.</p>
 
-        <p class="kicker reveal"><span class="kicker-line"></span>تمرین</p>
+        <p class="kicker reveal"><span class="kicker-line"></span>تمرین اول: خوب دیدن</p>
         <blockquote class="cinema-quote reveal">
-          <span>“</span>
-          <p>۳۰ یا ۶۰ ثانیه، بدون وقفه، اسم تمام چیزهایی که اطرافمان هست را بگوییم. سرعت گفتن کلمات معمولی باشد؛ سریع نمی‌خواهد باشد؛ فقط بدون وقفه.</p>
+          <span aria-hidden="true">“</span>
+          <p>۳۰ یا ۶۰ ثانیه، بدون وقفه، اسم تمام چیزهایی را که اطرافمان هست بگوییم. سرعت گفتن کلمات باید معمولی باشد؛ سریع گفتن لازم نیست، فقط باید بدون وقفه ادامه بدهیم.</p>
         </blockquote>
 
+        <p class="kicker reveal"><span class="kicker-line"></span>دلیل‌های این تمرین</p>
         <div class="reason-list">
           <div class="reason-card reveal">
             <span>۰۱</span>
-            <div><h3>سرعت اشتباه کردن را از خودمان می‌گیریم</h3></div>
+            <div><h3>امکان اشتباه کردن را از خودمان می‌گیریم</h3></div>
           </div>
           <div class="reason-card reveal" style="transition-delay:.08s">
             <span>۰۲</span>
-            <div><h3>دسترسی به واژگان سریع‌تر می‌شود</h3></div>
+            <div><h3>دسترسی به واژگان برایمان سریع‌تر می‌شود</h3></div>
           </div>
           <div class="reason-card reveal" style="transition-delay:.16s">
             <span>۰۳</span>
             <div><h3>مدیریت بحران را بالا می‌بریم</h3></div>
           </div>
         </div>
+
+        <p class="kicker reveal"><span class="kicker-line"></span>مرحله‌های بعدی تمرین</p>
+        <div class="reason-list">
+          <div class="reason-card reveal">
+            <span>۰۱</span>
+            <div><h3>نام اجزا و رنگ آن‌ها را می‌گوییم</h3></div>
+          </div>
+          <div class="reason-card reveal" style="transition-delay:.07s">
+            <span>۰۲</span>
+            <div><h3>نام، رنگ و جنس شیء را می‌گوییم</h3></div>
+          </div>
+          <div class="reason-card reveal" style="transition-delay:.14s">
+            <span>۰۳</span>
+            <div><h3>نام، رنگ، جنس، اجزا و عناصر آن را بیان می‌کنیم</h3><p>مثلاً: عینک سیاه پلاستیکی با عدسی شیشه‌ای، دسته و فریم.</p></div>
+          </div>
+          <div class="reason-card reveal" style="transition-delay:.21s">
+            <span>۰۴</span>
+            <div><h3>شکل، حالت و اندازهٔ آن را هم به توضیحات اضافه می‌کنیم</h3></div>
+          </div>
+          <div class="reason-card reveal" style="transition-delay:.28s">
+            <span>۰۵</span>
+            <div><h3>همهٔ ویژگی‌ها را همراه با حسی که از آن داریم بیان می‌کنیم</h3><p>مثلاً: مبل قهوه‌ای چوبی با روکش کرم‌رنگ، پایه‌های کوتاه، دسته‌های بلند، طرح گل‌دار و شکل مکعبی متوسط که خیلی راحت است.</p></div>
+          </div>
+        </div>
+
+        <p class="kicker reveal"><span class="kicker-line"></span>نکتهٔ مهم</p>
+        <blockquote class="cinema-quote reveal">
+          <span aria-hidden="true">“</span>
+          <p>تمرین را با صدای بلند انجام بدهیم؛ باید صدای صحبت خودمان را بشنویم، نه اینکه فقط در ذهنمان حرف بزنیم.</p>
+        </blockquote>
       </div>
     </section>
 
     <section class="idea-section">
       <div class="idea-heading reveal">
-        <span class="large-index">02</span>
+        <span class="large-index">۰۲</span>
         <h2>افزایش اطلاعات عمومی</h2>
       </div>
       <div class="idea-body">
         <p class="lead reveal">اطلاعات عمومی، سوختِ بیان است.</p>
         <p class="reveal">مثلاً خواندن کتاب؛ هرچه دانسته‌هایمان بیشتر باشد، جمله‌هایمان دقیق‌تر و غنی‌تر می‌شوند.</p>
-      </div>
-    </section>
-    <section class="idea-section">
-      <div class="idea-heading reveal">
-        <span class="large-index">03</span>
-        <h2>افزایش سرعت دسترسی به واژگان</h2>
-      </div>
-      <div class="idea-body">
-        <p class="lead reveal">تمرین خوب دیدن، این بار با مرحله‌های سخت‌ترِ پشت‌سرهم:</p>
-
-        <div class="reason-list">
-          <div class="reason-card reveal">
-            <span>۰۱</span>
-            <div><h3>اسم اجزا را با رنگشان می‌گوییم</h3></div>
-          </div>
-          <div class="reason-card reveal" style="transition-delay:.07s">
-            <span>۰۲</span>
-            <div><h3>اسم و رنگ و جنسش را می‌گوییم</h3></div>
-          </div>
-          <div class="reason-card reveal" style="transition-delay:.14s">
-            <span>۰۳</span>
-            <div><h3>اسم و رنگ و جنس و اجزا و عناصرش را می‌گوییم</h3><p>مثلاً عینک سیاه پلاستیکی با عدسی شیشه‌ای و دسته و فریم.</p></div>
-          </div>
-          <div class="reason-card reveal" style="transition-delay:.21s">
-            <span>۰۴</span>
-            <div><h3>اسم و رنگ و جنس و اجزا و عناصر و شکل و حالت و اندازه‌اش را می‌گوییم</h3></div>
-          </div>
-          <div class="reason-card reveal" style="transition-delay:.28s">
-            <span>۰۵</span>
-            <div><h3>همه را به‌همراه حسش می‌گوییم</h3><p>مثلاً مبل باحال.</p></div>
-          </div>
-        </div>
-
-        <p class="kicker reveal"><span class="kicker-line"></span>نکته مهم</p>
-        <blockquote class="cinema-quote reveal">
-          <span>“</span>
-          <p>مرحله‌ها را جوری انجام بدهیم که صدای صحبت خودمان را بشنویم؛ نباید داخل ذهن باشد.</p>
-        </blockquote>
       </div>
     </section>
     <div class="page-next reveal">
@@ -145,7 +140,7 @@
 <footer class="footer wrap">
   <a class="brand brand-small" href="index.html">
     <span class="brand-mark">
-      <img src="assets/images/logo.svg" alt="مهدیارشو" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+      <img src="assets/images/logo.webp" alt="" class="brand-logo" aria-hidden="true">
     </span>
     <span>مهدیارشو</span>
   </a>
@@ -153,17 +148,17 @@
   <a href="#top" class="back-top">بازگشت به بالا ↑</a>
 </footer>
 
-<div class="search-layer" hidden>
+<div class="search-layer" hidden role="dialog" aria-modal="true" aria-labelledby="search-dialog-title">
   <div class="search-panel">
     <div class="search-head">
-      <span>جست‌وجو در مهدیارشو</span>
-      <button data-search-close>×</button>
+      <span id="search-dialog-title">جست‌وجو در مهدیارشو</span>
+      <button type="button" data-search-close aria-label="بستن جست‌وجو">×</button>
     </div>
     <div class="search-input-wrap">
       <span>⌕</span>
-      <input type="text" data-search-input placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
+      <input type="text" data-search-input aria-label="عبارت جست‌وجو" aria-controls="search-results" placeholder="مثلاً: همسایه‌داری، علم و حکمت، هدف انسان">
     </div>
-    <div class="search-results" data-search-results>
+    <div class="search-results" id="search-results" data-search-results role="status" aria-live="polite" aria-relevant="additions text">
       <p class="search-hint">مثلاً: همسایه‌داری، علم و حکمت، هدف انسان</p>
     </div>
     <p class="search-foot">برای بستن، کلید Escape را بزن.</p>
