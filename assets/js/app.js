@@ -22,9 +22,16 @@
     {title:'آرایش و زینت',desc:'احکام اجتماعی',url:'ahkam.html',terms:'آرایش زینت'},
     {title:'ارتباط با نامحرم',desc:'احکام اجتماعی',url:'ahkam.html',terms:'ارتباط نامحرم'},
     {title:'مجالس شادی',desc:'احکام اجتماعی',url:'ahkam.html',terms:'احکام مجالس شادی مجالس شادی'},
-    {title:'علم و حکمت الهی',desc:'اعتقادی · فصل اول',url:'aqeedeh.html',terms:'علم حکمت الهی'},
+    {title:'علم و حکمت الهی',desc:'اعتقادی · فصل اول',url:'elm-hekmat.html',terms:'علم حکمت الهی خدای عالم حکیم'},
+    {title:'خدای عالم و حکیم',desc:'علم و حکمت الهی · فصل اول',url:'elm-hekmat.html#divine-knowledge',flash:'#divine-knowledge',terms:'خدای عالم حکیم علم الهی علم خدا علم انسان مقایسه خدا مخلوق آزمون خطا'},
     {title:'مهربانی و رأفت خدا',desc:'اعتقادی · فصل دوم',url:'aqeedeh.html',terms:'مهربانی رأفت رافت خدا'},
-    {title:'خواست و قدرت الهی',desc:'اعتقادی · فصل سوم',url:'aqeedeh.html',terms:'خواست قدرت الهی'},
+    {title:'خواست و قدرت الهی',desc:'اعتقادی · فصل سوم',url:'khast-qodrat.html',terms:'خواست قدرت الهی خدا قدرت قادر'},
+    {title:'قدرت خداوند',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#divine-power',flash:'#divine-power',terms:'قدرت خدا قادر بودن خدا بر هر چیزی'},
+    {title:'رابطهٔ خواست خدا با تلاش انسان',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#will-and-effort',flash:'#will-and-effort',terms:'تلاش توکل امید خواست خدا مثال مشکلات اعضای بدن آسمان'},
+    {title:'وعده‌های الهی در سورهٔ طلاق',desc:'سورهٔ طلاق · آیات ۲ و ۳',url:'khast-qodrat.html#talaq-verses',flash:'#talaq-verses',terms:'سوره طلاق آیه ۲ ۳ آیه دو سه تقوا مخرج روزی گمان نمی‌کند توکل اندازه قدر' },
+    {title:'توکل',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#tawakkul',flash:'#tawakkul',terms:'توکل اعتماد فکری واگذاری عملی'},
+    {title:'تفاوت وکالت خدا و بشر',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#divine-human-agency',flash:'#divine-human-agency',terms:'وکالت خدا بشر انسان آگاهی امانتدار قدرتمند دلسوز تمام وقت تشریفات'},
+    {title:'آیات مرتبط با توکل و یاری خدا',desc:'بقره ۱۵۲ و ۴۰ · محمد ۷',url:'khast-qodrat.html#related-verses',flash:'#related-verses',terms:'آیه بقره ۱۵۲ ۴۰ محمد ۷ 152 40 7 یاری خدا عهد یاد خدا' },
     {title:'هدف خلقت انسان',desc:'علم و حکمت الهی · زیرموضوع اول',url:'hadaf.html#creation',terms:'هدف خلقت انسان آفرینش خدا شباهت علم'},
     {title:'خدا و انسان شباهت ندارند',desc:'هدف خلقت انسان · شناخت خدا',url:'hadaf.html#creation',terms:'شباهت خدا انسان تصویر علم خدا'},
     {title:'تفاوت هدف انسان با خدا',desc:'علم و حکمت الهی · زیرموضوع دوم',url:'hadaf.html#human-god-goal',flash:'#human-god-goal',terms:'تفاوت هدف انسان خدا تفاوت هدف خدا با انسان بی نیاز کمال'},
@@ -61,17 +68,18 @@
     .replace(/ئ/g, 'ی')
     .replace(/[ۀة]/g, 'ه')
     .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '')
-    .replace(/[\s\u200c\u200d\u200e\u200f\u2060\ufeff#_ـ،,؛;:!؟?."'`()\[\]{}<>/\\|–—-]/g, '');
+    .replace(/[^\p{L}\p{N}]/gu, '');
 
   /* صفحهٔ پنهان جلسه‌ها */
-  const sessionPages = { 1: '#jalase-1', 2: '#jalase-2', 3: '#jalase-3', 4: '#jalase-4', 5: '#jalase-5' };
-  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم' };
+  const sessionPages = { 1: '#jalase-1', 2: '#jalase-2', 3: '#jalase-3', 4: '#jalase-4', 5: '#jalase-5', 6: '#jalase-6' };
+  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم' };
   const sessionWords = {
     '1': 1, 'یک': 1, 'اول': 1, 'یکم': 1,
     '2': 2, 'دو': 2, 'دوم': 2,
     '3': 3, 'سه': 3, 'سوم': 3,
     '4': 4, 'چهار': 4, 'چهارم': 4,
-    '5': 5, 'پنج': 5, 'پنجم': 5
+    '5': 5, 'پنج': 5, 'پنجم': 5,
+    '6': 6, 'شش': 6, 'ششم': 6, 'ششمی': 6
   };
   /* هر تگ → شمارهٔ جلسه + نشانهٔ دقیقِ بخش مربوطه داخل همان صفحه */
   const sessionTags = {
@@ -84,13 +92,21 @@
     'احکام4':     { n: 4, focus: '#jalase-4 > section:nth-of-type(1)' },
     'ارتباطموثر2': { n: 4, focus: '#jalase-4 > section:nth-of-type(2)' },
     'احکام5':     { n: 5, focus: '#jalase-5 > section:nth-of-type(1)' },
-    'رشدفردی2':   { n: 5, focus: '#jalase-5 > section:nth-of-type(2)' }
+    'رشدفردی2':   { n: 5, focus: '#jalase-5 > section:nth-of-type(2)' },
+    'احکام6':     { n: 6, focus: '#jalase-6 > section:nth-of-type(1)' },
+    'اعتقادی2':  { n: 6, focus: '#jalase-6 > section:nth-of-type(2)' }
   };
   const matchSession = value => {
-    const match = normalize(value).match(/^جلسه(ی)?(.+)$/);
+    /* «جلسه» و «کلاس» مترادف جست‌وجویی‌اند؛ جداکننده‌ها و # قبلاً نرمال شده‌اند. */
+    const match = normalize(value).match(/^(?:جلسه|کلاس)(?:ی)?(.+)$/);
     if (!match) return null;
     return sessionWords[match[2]] || null;
   };
+  /* تگ‌های جلسه/کلاس نیز مانند #جلسه_۶ و #کلاس-6 به همان جلسه هدایت می‌شوند. */
+  for (let n = 1; n <= 6; n++) {
+    sessionTags['جلسه' + n] = { n, focus: sessionPages[n] };
+    sessionTags['کلاس' + n] = { n, focus: sessionPages[n] };
+  }
   const matchSessionTag = value => sessionTags[normalize(value)] || null;
 
   /* منطقهٔ دقیق برای فلش: کارت/ردیف/بخش/هدر */
@@ -146,7 +162,7 @@
       samePage = href.charAt(0) === '#';
     }
     /* یادداشت جلسه فقط با انتخاب نتیجه از خود جست‌وجو نمایش داده می‌شود. */
-    if (destination && destination.pathname.endsWith('/jalase.html') && /^#jalase-[1-5]$/.test(destination.hash)) {
+    if (destination && destination.pathname.endsWith('/jalase.html') && /^#jalase-[1-6]$/.test(destination.hash)) {
       try { sessionStorage.setItem('mh-session-access', destination.hash.slice(1)); } catch (error) { /* storage unavailable */ }
     }
     if (samePage) {
@@ -188,9 +204,9 @@
       link.href = resolveSiteHref('jalase.html' + sessionPages[sessionNumber]);
       link.dataset.flash = sessionPages[sessionNumber];
       const description = document.createElement('span');
-      description.append(document.createTextNode('یادداشت‌های جلسهٔ ' + sessionNames[sessionNumber]));
+      description.append(document.createTextNode('یادداشت‌های جلسه / کلاس ' + sessionNames[sessionNumber]));
       const small = document.createElement('small');
-      small.textContent = 'صفحهٔ اختصاصی یادداشت‌ها · فقط از طریق جست‌وجو';
+      small.textContent = 'یادداشت‌های همین جلسه';
       description.append(small);
       const arrow = document.createElement('span');
       arrow.setAttribute('aria-hidden', 'true');
@@ -208,9 +224,9 @@
       link.href = resolveSiteHref('jalase.html' + sessionPages[sessionTag.n]);
       link.dataset.flash = sessionTag.focus;
       const description = document.createElement('span');
-      description.append(document.createTextNode('یادداشت‌های جلسهٔ ' + sessionNames[sessionTag.n]));
+      description.append(document.createTextNode('یادداشت‌های جلسه / کلاس ' + sessionNames[sessionTag.n]));
       const small = document.createElement('small');
-      small.textContent = 'بخش مرتبط با تگ · فقط از طریق جست‌وجو';
+      small.textContent = 'یادداشت‌های مرتبط با این موضوع';
       description.append(small);
       const arrow = document.createElement('span');
       arrow.setAttribute('aria-hidden', 'true');

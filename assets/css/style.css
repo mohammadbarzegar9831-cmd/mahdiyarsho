@@ -1700,3 +1700,140 @@ h1,h2,h3,p {
     box-shadow: 0 0 0 2px var(--gold);
   }
 }
+
+/* محتوای اعتقادی: لینک‌های فصل و زیرموضوع */
+.belief-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  margin-top: 18px;
+}
+.belief-links .text-link { min-height: 36px; }
+.subtopics-strip { grid-template-columns: 1fr 1fr 1fr; }
+
+/* نمایش خوانا و راست‌به‌چپ آیات قرآن */
+.verse-card {
+  margin: 22px 0;
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(217,183,119,.24);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(22,37,54,.94), rgba(10,18,30,.96));
+  box-shadow: 0 18px 45px rgba(0,0,0,.14);
+}
+.verse-reference {
+  margin: 0 0 18px;
+  color: var(--gold2);
+  font-size: 13px;
+  font-weight: 700;
+}
+.quran-verse {
+  margin: 0;
+  color: #f7f0df;
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+  font-size: clamp(22px, 3.2vw, 30px);
+  line-height: 2.25;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.verse-translation {
+  margin: 20px 0 0;
+  padding-top: 17px;
+  border-top: 1px solid var(--line2);
+  color: #c7d0dc;
+  font-size: 15px;
+  line-height: 2.1;
+}
+.verse-points { margin-top: 20px; }
+.tawakkul-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.tawakkul-grid .insight-card { margin: 0; }
+.agency-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.agency-card {
+  padding: 24px;
+  border: 1px solid var(--line2);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(19,32,48,.94), rgba(11,19,31,.96));
+}
+.agency-card-divine {
+  border-color: rgba(110,201,188,.34);
+  background: linear-gradient(145deg, rgba(20,54,55,.72), rgba(11,19,31,.96));
+}
+.agency-card h3 {
+  margin-bottom: 18px;
+  color: var(--gold2);
+  font-size: 22px;
+}
+.agency-card ol {
+  margin: 0;
+  padding: 0 22px 0 0;
+  color: #d3dbe3;
+  line-height: 2.15;
+}
+.agency-card li { padding: 5px 0; }
+
+/* صفحهٔ ۴۰۴: دو اقدام هم‌وزن و هماهنگ با تم سایت */
+.error-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.error-actions .button {
+  min-width: 176px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  gap: 10px;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.button-error-primary {
+  color: #101827;
+  border: 1px solid #e4c98e;
+  background: linear-gradient(120deg, #c9a563, #f0d9a3);
+  box-shadow: 0 8px 22px rgba(217,183,119,.13);
+}
+.button-error-secondary {
+  color: var(--gold2);
+  border: 1px solid rgba(217,183,119,.42);
+  background: rgba(17,29,45,.72);
+}
+.error-actions .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,.22);
+}
+.button-error-primary:hover { background: linear-gradient(120deg, #dfbd7b, #f8e4b7); }
+.button-error-secondary:hover {
+  border-color: var(--teal);
+  background: rgba(36,76,79,.35);
+  color: #a5e4dc;
+}
+.error-actions .button:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .agency-grid, .tawakkul-grid { grid-template-columns: 1fr; }
+  .error-actions { align-items: stretch; flex-direction: column; }
+  .error-actions .button { width: 100%; }
+  .subtopics-strip { grid-template-columns: 1fr; }
+  .belief-links { align-items: flex-start; flex-direction: column; }
+  .quran-verse { font-size: 21px; line-height: 2.1; }
+}
+
+.verse-source { margin: 12px 0 0; font-size: 12px; }
+.verse-source a { color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(110,201,188,.35); padding-bottom: 2px; }
+.verse-source a:hover { color: var(--gold2); border-color: var(--gold2); }
+.verse-source a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; border-radius: 3px; }

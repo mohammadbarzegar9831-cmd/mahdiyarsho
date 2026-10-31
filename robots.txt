@@ -1,0 +1,34 @@
+# SEO policy template for the MahdiyarShow GitHub Pages project.
+# IMPORTANT: This repository is a project site at /mahdiyarsho/.
+# Search crawlers normally read robots.txt from the HOST ROOT, not this subdirectory.
+# To activate these rules, publish this file at:
+# https://mohammadbarzegar9831-cmd.github.io/robots.txt
+# (for example, from the user-site repository named mohammadbarzegar9831-cmd.github.io)
+# or use a custom domain and publish it at that domain's root.
+
+User-agent: *
+Allow: /mahdiyarsho/
+
+User-agent: Googlebot
+Allow: /mahdiyarsho/
+
+# Google-Extended is separate from Googlebot and does not block Google Search.
+User-agent: Google-Extended
+Disallow: /mahdiyarsho/
+
+# ChatGPT Search must remain allowed; GPTBot is the training crawler.
+User-agent: OAI-SearchBot
+Allow: /mahdiyarsho/
+
+User-agent: GPTBot
+Disallow: /mahdiyarsho/
+
+# Bing Search and Copilot crawling remain allowed.
+User-agent: Bingbot
+Allow: /mahdiyarsho/
+
+# Shared AI-training preference (support timing differs by provider).
+User-agent: __usage_ai-training
+Disallow: /mahdiyarsho/
+
+Sitemap: https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/sitemap.xml
