@@ -10,39 +10,7 @@
 
   /* آیکون اختصاصی مرورگر از فایل‌های ثابت در HTML بارگذاری می‌شود. */
 
-  const index = [
-    {title:'احکام اجتماعی',desc:'بخش احکام · فهرست هشت موضوع',url:'ahkam.html',terms:'احکام اجتماعی احکام'},
-    {title:'امر به معروف و نهی از منکر',desc:'احکام اجتماعی · موضوع اول',url:'amr-marouf.html',terms:'امر معروف نهی منکر واجب عینی کفایی'},
-    {title:'ارتباط مؤثر',desc:'انواع ارتباط برقرار کردن · بخش سوم سایت',url:'ertebat.html',terms:'ارتباط موثر ارتباطمؤثر انواع ارتباط برقرار کردن حرف زدن زبان بدن فرا بدن ارتباط'},
-    {title:'فن بیان',desc:'ارتباط مؤثر · حرف زدن',url:'fan-bayan.html',terms:'فن بیان خوب دیدن واژگان مدیریت بحران کتاب'},
-    {title:'همسایه‌داری',desc:'احکام اجتماعی',url:'ahkam.html',terms:'همسایه داری همسایه'},
-    {title:'گناهان زبانی',desc:'احکام اجتماعی',url:'ahkam.html',terms:'گناهان زبانی'},
-    {title:'فضای مجازی',desc:'احکام اجتماعی',url:'ahkam.html',terms:'احکام فضای مجازی فضای مجازی اینترنت'},
-    {title:'کپی‌رایت',desc:'احکام اجتماعی',url:'ahkam.html',terms:'کپی رایت'},
-    {title:'آرایش و زینت',desc:'احکام اجتماعی',url:'ahkam.html',terms:'آرایش زینت'},
-    {title:'ارتباط با نامحرم',desc:'احکام اجتماعی',url:'ahkam.html',terms:'ارتباط نامحرم'},
-    {title:'مجالس شادی',desc:'احکام اجتماعی',url:'ahkam.html',terms:'احکام مجالس شادی مجالس شادی'},
-    {title:'علم و حکمت الهی',desc:'اعتقادی · فصل اول',url:'elm-hekmat.html',terms:'علم حکمت الهی خدای عالم حکیم'},
-    {title:'خدای عالم و حکیم',desc:'علم و حکمت الهی · فصل اول',url:'elm-hekmat.html#divine-knowledge',flash:'#divine-knowledge',terms:'خدای عالم حکیم علم الهی علم خدا علم انسان مقایسه خدا مخلوق آزمون خطا'},
-    {title:'مهربانی و رأفت خدا',desc:'اعتقادی · فصل دوم',url:'aqeedeh.html',terms:'مهربانی رأفت رافت خدا'},
-    {title:'خواست و قدرت الهی',desc:'اعتقادی · فصل سوم',url:'khast-qodrat.html',terms:'خواست قدرت الهی خدا قدرت قادر'},
-    {title:'قدرت خداوند',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#divine-power',flash:'#divine-power',terms:'قدرت خدا قادر بودن خدا بر هر چیزی'},
-    {title:'رابطهٔ خواست خدا با تلاش انسان',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#will-and-effort',flash:'#will-and-effort',terms:'تلاش توکل امید خواست خدا مثال مشکلات اعضای بدن آسمان'},
-    {title:'وعده‌های الهی در سورهٔ طلاق',desc:'سورهٔ طلاق · آیات ۲ و ۳',url:'khast-qodrat.html#talaq-verses',flash:'#talaq-verses',terms:'سوره طلاق آیه ۲ ۳ آیه دو سه تقوا مخرج روزی گمان نمی‌کند توکل اندازه قدر' },
-    {title:'توکل',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#tawakkul',flash:'#tawakkul',terms:'توکل اعتماد فکری واگذاری عملی'},
-    {title:'تفاوت وکالت خدا و بشر',desc:'خواست و قدرت الهی',url:'khast-qodrat.html#divine-human-agency',flash:'#divine-human-agency',terms:'وکالت خدا بشر انسان آگاهی امانتدار قدرتمند دلسوز تمام وقت تشریفات'},
-    {title:'آیات مرتبط با توکل و یاری خدا',desc:'بقره ۱۵۲ و ۴۰ · محمد ۷',url:'khast-qodrat.html#related-verses',flash:'#related-verses',terms:'آیه بقره ۱۵۲ ۴۰ محمد ۷ 152 40 7 یاری خدا عهد یاد خدا' },
-    {title:'هدف خلقت انسان',desc:'علم و حکمت الهی · زیرموضوع اول',url:'hadaf.html#creation',terms:'هدف خلقت انسان آفرینش خدا شباهت علم'},
-    {title:'خدا و انسان شباهت ندارند',desc:'هدف خلقت انسان · شناخت خدا',url:'hadaf.html#creation',terms:'شباهت خدا انسان تصویر علم خدا'},
-    {title:'تفاوت هدف انسان با خدا',desc:'علم و حکمت الهی · زیرموضوع دوم',url:'hadaf.html#human-god-goal',flash:'#human-god-goal',terms:'تفاوت هدف انسان خدا تفاوت هدف خدا با انسان بی نیاز کمال'},
-    {title:'نتیجه‌گیری بخش اعتقادی',desc:'خدا بی‌نیاز و بخشنده است',url:'hadaf.html#conclusion',flash:'#conclusion',terms:'نتیجه گیری علم فراوان خدا بخشنده بی نیاز'},
-    {title:'رشد فردی',desc:'بخش چهارم · یک فصل',url:'roshd.html',terms:'رشد فردی رشد'},
-    {title:'قدرت تمرکز',desc:'رشد فردی · فصل اول',url:'tamarkoz.html',terms:'تمرکز اراده توجه فواید تمرکز حواس پرتی'},
-    {title:'شرایط امر به معروف و نهی از منکر',desc:'احکام · موضوع اول',url:'amr-marouf.html',terms:'شرایط امر معروف نهی منکر یقین احتمال تاثیر اصرار معذور ضرر خسران نجات پدر مادر همسر احترام'},
-    {title:'نکته‌های مهم امر به معروف و نهی از منکر',desc:'احکام · موضوع اول',url:'amr-marouf.html',terms:'نکته امر معروف نهی منکر خودمان عمل پدر مادر همسر احترام'},
-    {title:'افزایش دایره کلمات یا سرعت دسترسی به واژگان',desc:'ارتباط مؤثر · فن بیان',url:'fan-bayan.html',terms:'دایره کلمات واژگان تمرین رنگ جنس اجزا شکل حس'},
-    {title:'علت حواس‌پرتی',desc:'رشد فردی · قدرت تمرکز',url:'tamarkoz.html#havasperti',terms:'حواس پرتی علت رنج فرار تسکین شناخت غرور تخریب شخصیت'}
-  ];
+  const index = Array.isArray(window.MAHDIYARSHO_SEARCH_INDEX) ? window.MAHDIYARSHO_SEARCH_INDEX : [];
 
   const layer = document.querySelector('.search-layer');
   const panel = layer?.querySelector('.search-panel');
@@ -71,44 +39,42 @@
     .replace(/[^\p{L}\p{N}]/gu, '');
 
   /* صفحهٔ پنهان جلسه‌ها */
-  const sessionPages = { 1: '#jalase-1', 2: '#jalase-2', 3: '#jalase-3', 4: '#jalase-4', 5: '#jalase-5', 6: '#jalase-6' };
-  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم' };
+  const sessionPages = { 1: '#jalase-1', 2: '#jalase-2', 3: '#jalase-3', 4: '#jalase-4', 5: '#jalase-5', 6: '#jalase-6', 7: '#jalase-7' };
+  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم' };
   const sessionWords = {
-    '1': 1, 'یک': 1, 'اول': 1, 'یکم': 1,
-    '2': 2, 'دو': 2, 'دوم': 2,
-    '3': 3, 'سه': 3, 'سوم': 3,
-    '4': 4, 'چهار': 4, 'چهارم': 4,
-    '5': 5, 'پنج': 5, 'پنجم': 5,
-    '6': 6, 'شش': 6, 'ششم': 6, 'ششمی': 6
+    '1':1,'یک':1,'اول':1,'یکم':1, '2':2,'دو':2,'دوم':2, '3':3,'سه':3,'سوم':3,
+    '4':4,'چهار':4,'چهارم':4, '5':5,'پنج':5,'پنجم':5,
+    '6':6,'شش':6,'ششم':6,'ششمی':6, '7':7,'هفت':7,'هفتم':7,'هفتمی':7
   };
-  /* هر تگ → شمارهٔ جلسه + نشانهٔ دقیقِ بخش مربوطه داخل همان صفحه */
   const sessionTags = {
-    'احکام1':     { n: 1, focus: '#jalase-1 > section:nth-of-type(1)' },
-    'اعتقادی1':  { n: 1, focus: '#jalase-1 > section:nth-of-type(2)' },
-    'احکام2':     { n: 2, focus: '#jalase-2 > section:nth-of-type(1)' },
-    'ارتباطموثر1': { n: 2, focus: '#jalase-2 > section:nth-of-type(2)' },
-    'احکام3':     { n: 3, focus: '#jalase-3 > section:nth-of-type(1)' },
-    'رشدفردی1':   { n: 3, focus: '#jalase-3 > section:nth-of-type(2)' },
-    'احکام4':     { n: 4, focus: '#jalase-4 > section:nth-of-type(1)' },
-    'ارتباطموثر2': { n: 4, focus: '#jalase-4 > section:nth-of-type(2)' },
-    'احکام5':     { n: 5, focus: '#jalase-5 > section:nth-of-type(1)' },
-    'رشدفردی2':   { n: 5, focus: '#jalase-5 > section:nth-of-type(2)' },
-    'احکام6':     { n: 6, focus: '#jalase-6 > section:nth-of-type(1)' },
-    'اعتقادی2':  { n: 6, focus: '#jalase-6 > section:nth-of-type(2)' }
+    'احکام1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(1)'}, 'اعتقادی1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(2)'},
+    'احکام2':{n:2,focus:'#jalase-2 > section.idea-section:nth-of-type(1)'}, 'ارتباطموثر1':{n:2,focus:'#jalase-2 > section.idea-section:nth-of-type(2)'},
+    'احکام3':{n:3,focus:'#jalase-3 > section.idea-section:nth-of-type(1)'}, 'رشدفردی1':{n:3,focus:'#jalase-3 > section.idea-section:nth-of-type(2)'},
+    'احکام4':{n:4,focus:'#jalase-4 > section.idea-section:nth-of-type(1)'}, 'ارتباطموثر2':{n:4,focus:'#jalase-4 > section.idea-section:nth-of-type(2)'},
+    'احکام5':{n:5,focus:'#jalase-5 > section.idea-section:nth-of-type(1)'}, 'رشدفردی2':{n:5,focus:'#jalase-5 > section.idea-section:nth-of-type(2)'},
+    'احکام6':{n:6,focus:'#jalase-6 > section.idea-section:nth-of-type(1)'}, 'اعتقادی2':{n:6,focus:'#jalase-6 > section.idea-section:nth-of-type(2)'},
+    'احکام7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'}, 'همسایهداری7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'},
+    'ارتباطموثر3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'}, 'فنبیان3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'}
   };
   const matchSession = value => {
-    /* «جلسه» و «کلاس» مترادف جست‌وجویی‌اند؛ جداکننده‌ها و # قبلاً نرمال شده‌اند. */
-    const match = normalize(value).match(/^(?:جلسه|کلاس)(?:ی)?(.+)$/);
+    const normalized = normalize(value);
+    const match = normalized.match(/^(?:جلسه|کلاس)(?:ی)?(.+)$/);
     if (!match) return null;
-    return sessionWords[match[2]] || null;
+    return sessionWords[match[1]] || null;
   };
-  /* تگ‌های جلسه/کلاس نیز مانند #جلسه_۶ و #کلاس-6 به همان جلسه هدایت می‌شوند. */
-  for (let n = 1; n <= 6; n++) {
-    sessionTags['جلسه' + n] = { n, focus: sessionPages[n] };
-    sessionTags['کلاس' + n] = { n, focus: sessionPages[n] };
-  }
-  const matchSessionTag = value => sessionTags[normalize(value)] || null;
-
+  const matchSessionTag = value => {
+    const normalized = normalize(value);
+    if (sessionTags[normalized]) return sessionTags[normalized];
+    const categoryTag = normalized.match(/^(احکام|اعتقادی|ارتباطموثر|رشدفردی|همسایهداری|فنبیان)(.+)$/);
+    if (categoryTag && sessionWords[categoryTag[2]]) {
+      const key = categoryTag[1] + sessionWords[categoryTag[2]];
+      if (sessionTags[key]) return sessionTags[key];
+    }
+    /* قبول تگ‌هایی مثل #جلسه_ششم، #کلاس-6 و #احکام_۶؛ # و جداکننده‌ها در normalize حذف شده‌اند. */
+    const named = normalized.match(/^(?:جلسه|کلاس)(.+)$/);
+    if (named && sessionWords[named[1]]) return { n: sessionWords[named[1]], focus: sessionPages[sessionWords[named[1]]] };
+    return null;
+  };
   /* منطقهٔ دقیق برای فلش: کارت/ردیف/بخش/هدر */
   const REGION_SELECTOR = '.topic-row, .belief-card, .feature-card, .reason-card, .insight-card, .idea-section, .conclusion, .section, .page-hero';
 
@@ -162,7 +128,7 @@
       samePage = href.charAt(0) === '#';
     }
     /* یادداشت جلسه فقط با انتخاب نتیجه از خود جست‌وجو نمایش داده می‌شود. */
-    if (destination && destination.pathname.endsWith('/jalase.html') && /^#jalase-[1-6]$/.test(destination.hash)) {
+    if (destination && destination.pathname.endsWith('/jalase.html') && /^#jalase-[1-7]$/.test(destination.hash)) {
       try { sessionStorage.setItem('mh-session-access', destination.hash.slice(1)); } catch (error) { /* storage unavailable */ }
     }
     if (samePage) {
@@ -236,10 +202,14 @@
       return;
     }
 
-    const matches = index.filter(item => {
-      const haystack = normalize(`${item.title} ${item.desc} ${item.terms}`);
-      return tokens.every(token => haystack.includes(token));
-    }).slice(0, 9);
+    const matches = index.map(item => {
+      const titleText = normalize(item.title || '');
+      const haystack = normalize(`${item.title || ''} ${item.desc || ''} ${item.terms || ''}`);
+      const ok = tokens.every(token => haystack.includes(token));
+      if (!ok) return null;
+      const score = tokens.reduce((total, token) => total + (titleText.includes(token) ? 5 : 0) + (haystack.includes(token) ? 1 : 0), 0);
+      return { item, score };
+    }).filter(Boolean).sort((a, b) => b.score - a.score).slice(0, 12).map(row => row.item);
 
     if (!matches.length) {
       const hint = document.createElement('p');
@@ -385,7 +355,7 @@
     '.hero-copy > *', '.hero-art', '.hero-bottom', '.breadcrumb', '.page-hero',
     '.section-heading', '.feature-card', '.belief-card', '.topic-row',
     '.subtopics-strip', '.quote-inner', '.page-next', '.idea-section',
-    '.insight-card', '.cinema-quote', '.reason-card', '.conclusion'
+    '.insight-card', '.cinema-quote', '.reason-card', '.conclusion', '.practice-group', '.verse-source', '.verse-translation', '.session-block > .page-hero'
   ].join(',');
   document.querySelectorAll(revealSelectors).forEach(element => {
     if (!element.classList.contains('reveal')) element.classList.add('reveal');
@@ -399,13 +369,20 @@
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
+        /* ورود به دید: اجرا؛ خروج از دید: آماده‌سازی برای اجرای دوباره در دور بعدی */
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
       });
-    }, { threshold: 0.06, rootMargin: '0px 0px -4% 0px' });
+    }, { threshold: 0.04, rootMargin: '0px 0px -3% 0px' });
     reveals.forEach(element => revealObserver.observe(element));
+    /* بازگشت از صفحهٔ دیگر با Back/Forward Cache هم باید انیمیشن‌ها را از نو آماده کند. */
+    window.addEventListener('pageshow', event => {
+      if (!event.persisted || !revealObserver) return;
+      reveals.forEach(element => {
+        element.classList.remove('is-visible');
+        revealObserver.unobserve(element);
+        revealObserver.observe(element);
+      });
+    });
   } else {
     reveals.forEach(element => element.classList.add('is-visible'));
   }

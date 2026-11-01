@@ -1837,3 +1837,44 @@ h1,h2,h3,p {
 .verse-source a { color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(110,201,188,.35); padding-bottom: 2px; }
 .verse-source a:hover { color: var(--gold2); border-color: var(--gold2); }
 .verse-source a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; border-radius: 3px; }
+
+
+/* تمرین‌های تکمیلی فن بیان: زیربخشِ هدف اول، نه یک شبکهٔ تودرتو */
+.practice-group {
+  margin-top: 44px;
+  padding-top: 34px;
+  border-top: 1px solid var(--line2);
+}
+.practice-group-title {
+  color: var(--teal);
+  font-size: clamp(19px, 2.1vw, 24px);
+  font-weight: 600;
+  line-height: 1.7;
+  margin: 0 0 24px;
+}
+.practice-group .subsection-title {
+  color: var(--gold2);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.8;
+  margin: 30px 0 12px;
+}
+.practice-group .tawakkul-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.practice-group .tawakkul-grid .insight-card { min-width: 0; }
+.practice-group .reason-list { margin-top: 18px; }
+@media (max-width: 560px) {
+  .practice-group .tawakkul-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-enabled .reveal,
+  .js-enabled .reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
