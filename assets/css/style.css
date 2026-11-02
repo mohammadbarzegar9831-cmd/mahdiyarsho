@@ -1,4 +1,5 @@
 :root {
+  color-scheme: dark;
   --bg: #080d18;
   --bg2: #0c1422;
   --panel: #111d2d;
@@ -30,7 +31,7 @@ body {
   margin: 0;
   background: radial-gradient(ellipse at 75% -10%,#1a3043 0,transparent 38%),var(--bg);
   color: var(--ink);
-  font-family: 'Vazirmatn',Tahoma,Arial,sans-serif;
+  font-family: 'Vazirmatn', Tahoma, system-ui, Arial, sans-serif;
   line-height: 1.95;
   overflow-x: hidden;
 }
@@ -307,17 +308,6 @@ h1,h2,h3,p {
   box-shadow: 0 0 55px #173b43, inset 0 0 24px rgba(217,183,119,.08);
 }
 
-.art-caption {
-  position: absolute;
-  bottom: 10px;
-  left: 4%;
-  right: 4%;
-  display: flex;
-  justify-content: space-between;
-  color: #778494;
-  font-size: 9px;
-  letter-spacing: .2em;
-}
 
 .hero-bottom {
   position: absolute;
@@ -892,6 +882,12 @@ h1,h2,h3,p {
   font-weight: 600;
 }
 
+.reason-card h4 {
+  font-size: 15px;
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+
 .reason-card p {
   font-size: 12px;
   margin: 0;
@@ -1076,20 +1072,6 @@ h1,h2,h3,p {
   }
 }
 
-@keyframes riseIn {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.anim {
-  animation: riseIn .7s cubic-bezier(.22,.61,.36,1) both;
-}
 
 /* =========================================================
    تکمیل رابط کاربری، دسترس‌پذیری و نمایش واکنش‌گرا
@@ -1383,9 +1365,6 @@ h1,h2,h3,p {
     height: 115px;
     font-size: 52px;
   }
-  .art-caption {
-    bottom: 0;
-  }
   .hero-bottom {
     bottom: 20px;
     gap: 10px;
@@ -1674,8 +1653,8 @@ h1,h2,h3,p {
 .brand-logo {
   border-radius: 50%;
 }
-.session-block { display: none; }
-.session-block:target { display: block; }
+/* نمایش جلسه‌ها فقط با ویژگی hidden و کنترل اسکریپت انجام می‌شود. */
+.session-block[hidden] { display: none !important; }
 
 .flash-target {
   animation: flash-highlight 2s ease-out both;
@@ -1877,4 +1856,122 @@ h1,h2,h3,p {
     transform: none !important;
     transition: none !important;
   }
+}
+
+
+/* بهبودهای دسترس‌پذیری و موبایل */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.reason-text {
+  margin: 0;
+  color: var(--ink);
+  font-size: inherit;
+  font-weight: 500;
+  line-height: 1.9;
+}
+.desktop-hint { display: inline; }
+.mobile-hint { display: none; }
+.quran-verse {
+  font-family: "Noto Naskh Arabic", "Amiri", "Scheherazade New", "Traditional Arabic", serif;
+  line-height: 2.55;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+}
+.coming-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #9ca8b7 !important;
+}
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 3px 5px;
+  border-radius: 5px;
+}
+
+@media (max-width: 760px) {
+  body { font-size: 15px; }
+  .hero { padding-block: 38px 64px; gap: 8px; }
+  .hero-art {
+    grid-row: auto !important;
+    height: 185px;
+    max-width: 270px;
+    margin: 0 auto 6px;
+  }
+  .hero-art:before { width: 165px; height: 165px; }
+  .orbit-one { width: 175px; height: 205px; }
+  .orbit-two { width: 145px; height: 180px; }
+  .orb-core { width: 92px; height: 92px; font-size: 42px; }
+  .breadcrumb { gap: 5px; font-size: 12px; flex-wrap: wrap; }
+  .breadcrumb a { min-height: 44px; padding-inline: 9px; }
+  .kicker { font-size: 13px; }
+  .page-hero > p:not(.kicker), .idea-body p, .reason-card p,
+  .belief-card p, .section-note, .coming-note { font-size: 14px; }
+  .desktop-hint { display: none; }
+  .mobile-hint { display: inline; }
+}
+
+@media print {
+  :root { color-scheme: light; }
+  html, body {
+    background: #fff !important;
+    color: #111 !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: economy;
+    print-color-adjust: economy;
+  }
+  body::after, .grain, .skip-link, .search-layer, .menu-toggle,
+  .search-trigger, [data-search-open], .back-top, .round-link,
+  .page-next .button { display: none !important; }
+  .topbar {
+    position: static !important;
+    background: #fff !important;
+    color: #111 !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+  .brand, .brand small, .footer, .breadcrumb, .kicker,
+  .page-hero-index, .large-index, h1, h2, h3, p, li, a,
+  .reason-text, .verse-reference, .verse-translation, .formula-note {
+    color: #111 !important;
+    text-shadow: none !important;
+  }
+  .page-main, .wrap { width: 100% !important; max-width: none !important; padding: 0 !important; margin: 0 !important; }
+  .page-hero, .idea-section, .reason-card, .insight-card, .verse-card,
+  .conclusion, .belief-card, .topic-row, .feature-card, .practice-group {
+    background: #fff !important;
+    color: #111 !important;
+    box-shadow: none !important;
+    border-color: #ccc !important;
+    break-inside: avoid;
+  }
+  .reveal, .js-enabled .reveal, .js-enabled .reveal.is-visible,
+  .reveal.is-visible, .hero-copy > *, .hero-art, .hero-bottom {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .session-block[hidden] { display: none !important; }
+  .session-block:not([hidden]) { display: block !important; }
+  .search-hint, .session-access-hint { color: #333 !important; }
+  a { text-decoration: underline; }
+  .page-main { padding-block: 12px !important; }
+  .footer { border-top: 1px solid #ddd; }
+  .quran-verse { color: #111 !important; }
 }

@@ -1,0 +1,9 @@
+{
+  "name": "mahdiyarsho",
+  "version": "1.0.0",
+  "private": true,
+  "description": "وب‌سایت ایستای فارسی مهدیارشو",
+  "scripts": {
+    "build:search": "node build-search-index.js"
+  }
+}

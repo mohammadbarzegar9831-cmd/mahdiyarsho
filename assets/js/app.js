@@ -1,6 +1,5 @@
 (() => {
   'use strict';
-  document.documentElement.classList.add('js-enabled');
 
   /* صفحهٔ 404 مسیر پایهٔ پروژه را اعلام می‌کند تا مقصدهای جست‌وجو نسبی نشوند. */
   const siteBasePath = document.querySelector('meta[name="site-base"]')?.content;
@@ -10,7 +9,10 @@
 
   /* آیکون اختصاصی مرورگر از فایل‌های ثابت در HTML بارگذاری می‌شود. */
 
-  const index = Array.isArray(window.MAHDIYARSHO_SEARCH_INDEX) ? window.MAHDIYARSHO_SEARCH_INDEX : [];
+  let index = Array.isArray(window.MAHDIYARSHO_SEARCH_INDEX) ? window.MAHDIYARSHO_SEARCH_INDEX : [];
+  let indexLoaded = index.length > 0;
+  let indexLoading = null;
+  const appScriptUrl = document.currentScript?.src || new URL('assets/js/app.js', document.baseURI).href;
 
   const layer = document.querySelector('.search-layer');
   const panel = layer?.querySelector('.search-panel');
@@ -39,12 +41,15 @@
     .replace(/[^\p{L}\p{N}]/gu, '');
 
   /* صفحهٔ پنهان جلسه‌ها */
-  const sessionPages = { 1: '#jalase-1', 2: '#jalase-2', 3: '#jalase-3', 4: '#jalase-4', 5: '#jalase-5', 6: '#jalase-6', 7: '#jalase-7' };
-  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم' };
+  const sessionPage = number => `#jalase-${number}`;
+  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم', 8: 'هشتم', 9: 'نهم', 10: 'دهم', 11: 'یازدهم', 12: 'دوازدهم' };
+  const availableSessions = new Set();
+  const sessionLabel = number => sessionNames[number] || Number(number).toLocaleString('fa-IR');
   const sessionWords = {
     '1':1,'یک':1,'اول':1,'یکم':1, '2':2,'دو':2,'دوم':2, '3':3,'سه':3,'سوم':3,
     '4':4,'چهار':4,'چهارم':4, '5':5,'پنج':5,'پنجم':5,
-    '6':6,'شش':6,'ششم':6,'ششمی':6, '7':7,'هفت':7,'هفتم':7,'هفتمی':7
+    '6':6,'شش':6,'ششم':6,'ششمی':6, '7':7,'هفت':7,'هفتم':7,'هفتمی':7,
+    '8':8,'هشت':8,'هشتم':8,'هشتمی':8
   };
   const sessionTags = {
     'احکام1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(1)'}, 'اعتقادی1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(2)'},
@@ -54,25 +59,36 @@
     'احکام5':{n:5,focus:'#jalase-5 > section.idea-section:nth-of-type(1)'}, 'رشدفردی2':{n:5,focus:'#jalase-5 > section.idea-section:nth-of-type(2)'},
     'احکام6':{n:6,focus:'#jalase-6 > section.idea-section:nth-of-type(1)'}, 'اعتقادی2':{n:6,focus:'#jalase-6 > section.idea-section:nth-of-type(2)'},
     'احکام7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'}, 'همسایهداری7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'},
-    'ارتباطموثر3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'}, 'فنبیان3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'}
+    'ارتباطموثر3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'}, 'فنبیان3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'},
+    'احکام8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(1)'}, 'همسایهداری8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(1)'},
+    'رشدفردی3':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'}, 'لذت8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'}
   };
   const matchSession = value => {
     const normalized = normalize(value);
     const match = normalized.match(/^(?:جلسه|کلاس)(?:ی)?(.+)$/);
     if (!match) return null;
-    return sessionWords[match[1]] || null;
+    if (sessionWords[match[1]]) return sessionWords[match[1]];
+    const numeric = /^\d+$/.test(match[1]) ? Number(match[1]) : null;
+    return numeric && availableSessions.has(numeric) ? numeric : null;
   };
   const matchSessionTag = value => {
     const normalized = normalize(value);
     if (sessionTags[normalized]) return sessionTags[normalized];
     const categoryTag = normalized.match(/^(احکام|اعتقادی|ارتباطموثر|رشدفردی|همسایهداری|فنبیان)(.+)$/);
-    if (categoryTag && sessionWords[categoryTag[2]]) {
-      const key = categoryTag[1] + sessionWords[categoryTag[2]];
-      if (sessionTags[key]) return sessionTags[key];
+    if (categoryTag) {
+      const taggedNumber = sessionWords[categoryTag[2]] || (/^\d+$/.test(categoryTag[2]) && availableSessions.has(Number(categoryTag[2])) ? Number(categoryTag[2]) : null);
+      if (taggedNumber) {
+        const key = categoryTag[1] + taggedNumber;
+        if (sessionTags[key]) return sessionTags[key];
+        if (availableSessions.has(taggedNumber)) return { n: taggedNumber, focus: sessionPage(taggedNumber) };
+      }
     }
     /* قبول تگ‌هایی مثل #جلسه_ششم، #کلاس-6 و #احکام_۶؛ # و جداکننده‌ها در normalize حذف شده‌اند. */
     const named = normalized.match(/^(?:جلسه|کلاس)(.+)$/);
-    if (named && sessionWords[named[1]]) return { n: sessionWords[named[1]], focus: sessionPages[sessionWords[named[1]]] };
+    if (named) {
+      const namedNumber = sessionWords[named[1]] || (/^\d+$/.test(named[1]) && availableSessions.has(Number(named[1])) ? Number(named[1]) : null);
+      if (namedNumber) return { n: namedNumber, focus: sessionPage(namedNumber) };
+    }
     return null;
   };
   /* منطقهٔ دقیق برای فلش: کارت/ردیف/بخش/هدر */
@@ -128,7 +144,7 @@
       samePage = href.charAt(0) === '#';
     }
     /* یادداشت جلسه فقط با انتخاب نتیجه از خود جست‌وجو نمایش داده می‌شود. */
-    if (destination && destination.pathname.endsWith('/jalase.html') && /^#jalase-[1-7]$/.test(destination.hash)) {
+    if (destination && destination.pathname.endsWith('/jalase.html') && /^#jalase-\d+$/.test(destination.hash)) {
       try { sessionStorage.setItem('mh-session-access', destination.hash.slice(1)); } catch (error) { /* storage unavailable */ }
     }
     if (samePage) {
@@ -143,6 +159,38 @@
     }
   }
 
+  /* نمایهٔ بزرگ فقط پس از نخستین بازشدن جست‌وجو دریافت می‌شود. */
+  function ensureSearchIndex() {
+    if (indexLoaded) return Promise.resolve(index);
+    if (indexLoading) return indexLoading;
+    indexLoading = new Promise(resolve => {
+      const script = document.createElement('script');
+      script.src = new URL('search-index.js', appScriptUrl).href;
+      script.async = true;
+      script.onload = () => {
+        index = Array.isArray(window.MAHDIYARSHO_SEARCH_INDEX) ? window.MAHDIYARSHO_SEARCH_INDEX : [];
+        index.forEach(item => { if (Number.isInteger(item.session) && item.session > 0) availableSessions.add(item.session); });
+        indexLoaded = true;
+        indexLoading = null;
+        renderResults(input?.value || '');
+        resolve(index);
+      };
+      script.onerror = () => {
+        indexLoading = null;
+        if (results) {
+          results.replaceChildren();
+          const message = document.createElement('p');
+          message.className = 'search-hint';
+          message.textContent = 'بارگذاری نمایهٔ جست‌وجو انجام نشد؛ اتصال را بررسی و دوباره تلاش کن.';
+          results.append(message);
+        }
+        resolve([]);
+      };
+      document.head.append(script);
+    });
+    return indexLoading;
+  }
+
   /* بعد از انتخاب نتیجه: متن پاک، پنل بسته */
   function finishSearch() {
     if (input) input.value = '';
@@ -152,6 +200,7 @@
 
   function renderResults(value = '') {
     if (!results) return;
+    const normalizedInput = normalize(value);
     const tokens = value.trim().split(/\s+/).map(normalize).filter(Boolean);
     results.replaceChildren();
     if (!tokens.length) {
@@ -161,16 +210,31 @@
       results.append(hint);
       return;
     }
+    if (normalizedInput.length < 2) {
+      const hint = document.createElement('p');
+      hint.className = 'search-hint';
+      hint.textContent = 'برای جست‌وجو دست‌کم دو نویسه وارد کن.';
+      results.append(hint);
+      return;
+    }
+    if (!indexLoaded && !matchSession(value) && !matchSessionTag(value)) {
+      const hint = document.createElement('p');
+      hint.className = 'search-hint';
+      hint.textContent = 'در حال آماده‌سازی جست‌وجوی کامل…';
+      results.append(hint);
+      ensureSearchIndex();
+      return;
+    }
 
     /* اول «جلسه X» → فلش روی کادر هدر جلسه */
     const sessionNumber = matchSession(value);
     if (sessionNumber) {
       const link = document.createElement('a');
       link.className = 'search-result';
-      link.href = resolveSiteHref('jalase.html' + sessionPages[sessionNumber]);
-      link.dataset.flash = sessionPages[sessionNumber];
+      link.href = resolveSiteHref('jalase.html' + sessionPage(sessionNumber));
+      link.dataset.flash = sessionPage(sessionNumber);
       const description = document.createElement('span');
-      description.append(document.createTextNode('یادداشت‌های جلسه / کلاس ' + sessionNames[sessionNumber]));
+      description.append(document.createTextNode('یادداشت‌های جلسه / کلاس ' + sessionLabel(sessionNumber)));
       const small = document.createElement('small');
       small.textContent = 'یادداشت‌های همین جلسه';
       description.append(small);
@@ -187,10 +251,10 @@
     if (sessionTag) {
       const link = document.createElement('a');
       link.className = 'search-result';
-      link.href = resolveSiteHref('jalase.html' + sessionPages[sessionTag.n]);
+      link.href = resolveSiteHref('jalase.html' + sessionPage(sessionTag.n));
       link.dataset.flash = sessionTag.focus;
       const description = document.createElement('span');
-      description.append(document.createTextNode('یادداشت‌های جلسه / کلاس ' + sessionNames[sessionTag.n]));
+      description.append(document.createTextNode('یادداشت‌های جلسه / کلاس ' + sessionLabel(sessionTag.n)));
       const small = document.createElement('small');
       small.textContent = 'یادداشت‌های مرتبط با این موضوع';
       description.append(small);
@@ -202,15 +266,29 @@
       return;
     }
 
-    const matches = index.map(item => {
+    const bestPerPageTitle = new Map();
+    index.forEach(item => {
       const titleText = normalize(item.title || '');
-      const haystack = normalize(`${item.title || ''} ${item.desc || ''} ${item.terms || ''}`);
+      const pageText = normalize(item.pageTitle || '');
+      const haystack = normalize(`${item.title || ''} ${item.desc || ''} ${item.terms || ''} ${item.pageTitle || ''}`);
       const ok = tokens.every(token => haystack.includes(token));
-      if (!ok) return null;
-      const score = tokens.reduce((total, token) => total + (titleText.includes(token) ? 5 : 0) + (haystack.includes(token) ? 1 : 0), 0);
-      return { item, score };
-    }).filter(Boolean).sort((a, b) => b.score - a.score).slice(0, 12).map(row => row.item);
-
+      if (!ok) return;
+      const descText = normalize(item.desc || '');
+      const titleHits = tokens.filter(token => titleText.includes(token)).length;
+      const descHits = tokens.filter(token => descText.includes(token)).length;
+      const pageHits = tokens.filter(token => pageText.includes(token)).length;
+      const exactPhrase = normalizedInput && haystack.includes(normalizedInput) ? 7 : 0;
+      const score = titleHits * 10 + descHits * 7 + pageHits * 2 + (item.level === 1 ? 14 : 0) + exactPhrase + tokens.length;
+      const page = (item.url || '').split('#')[0];
+      const key = page; // یک نتیجهٔ برتر برای هر صفحه، نه تکرار چندین قطعه از یک صفحه
+      const candidate = { item, score };
+      const previous = bestPerPageTitle.get(key);
+      if (!previous || candidate.score > previous.score) bestPerPageTitle.set(key, candidate);
+    });
+    const matches = Array.from(bestPerPageTitle.values())
+      .sort((a, b) => b.score - a.score || String(a.item.title).localeCompare(String(b.item.title), 'fa'))
+      .slice(0, 10)
+      .map(row => row.item);
     if (!matches.length) {
       const hint = document.createElement('p');
       hint.className = 'search-hint';
@@ -250,6 +328,7 @@
     layer.hidden = false;
     document.body.style.overflow = 'hidden';
     renderResults(input?.value || '');
+    ensureSearchIndex();
     window.requestAnimationFrame(() => input?.focus());
   }
 
@@ -324,7 +403,7 @@
       if (layer && !layer.hidden) closeSearch();
       if (nav?.classList.contains('is-open')) closeMenu(true);
     }
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+    if ((event.ctrlKey || event.metaKey) && event.code === 'KeyK') {
       event.preventDefault();
       openSearch(document.querySelector('[data-search-open]'));
     }

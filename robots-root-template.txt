@@ -1,0 +1,25 @@
+# This file is served from the project path. Many crawlers only honor robots.txt at the host root.
+# Copy robots-root-template.txt to the root of the account site (mohammadbarzegar9831-cmd.github.io)
+# to enforce these rules for /mahdiyarsho/.
+User-agent: *
+Allow: /mahdiyarsho/
+
+User-agent: Googlebot
+Allow: /mahdiyarsho/
+
+User-agent: Google-Extended
+Disallow: /mahdiyarsho/
+
+User-agent: OAI-SearchBot
+Allow: /mahdiyarsho/
+
+User-agent: GPTBot
+Disallow: /mahdiyarsho/
+
+User-agent: Bingbot
+Allow: /mahdiyarsho/
+
+User-agent: __usage_ai-training
+Disallow: /mahdiyarsho/
+
+Sitemap: https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/sitemap.xml
