@@ -49,7 +49,7 @@
     '1':1,'یک':1,'اول':1,'یکم':1, '2':2,'دو':2,'دوم':2, '3':3,'سه':3,'سوم':3,
     '4':4,'چهار':4,'چهارم':4, '5':5,'پنج':5,'پنجم':5,
     '6':6,'شش':6,'ششم':6,'ششمی':6, '7':7,'هفت':7,'هفتم':7,'هفتمی':7,
-    '8':8,'هشت':8,'هشتم':8,'هشتمی':8
+    '8':8,'هشت':8,'هشتم':8,'هشتمی':8, '9':9,'نه':9,'نهم':9,'نهمی':9
   };
   const sessionTags = {
     'احکام1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(1)'}, 'اعتقادی1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(2)'},
@@ -61,7 +61,9 @@
     'احکام7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'}, 'همسایهداری7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'},
     'ارتباطموثر3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'}, 'فنبیان3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'},
     'احکام8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(1)'}, 'همسایهداری8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(1)'},
-    'رشدفردی3':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'}, 'لذت8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'}
+    'رشدفردی3':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'}, 'لذت8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'},
+    'احکام9':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(1)'}, 'همسایهداری9':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(1)'},
+    'ارتباطموثر4':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(2)'}, 'فنبیان4':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(2)'}
   };
   const matchSession = value => {
     const normalized = normalize(value);
