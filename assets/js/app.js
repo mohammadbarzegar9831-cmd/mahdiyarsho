@@ -40,59 +40,162 @@
     .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '')
     .replace(/[^\p{L}\p{N}]/gu, '');
 
+  const splitSearchWords = value => String(value || '')
+    .split(/[^\p{L}\p{N}]+/u)
+    .map(normalize)
+    .filter(word => word.length > 1);
+
+  function editDistance(left, right, limit = 2) {
+    const a = Array.from(left);
+    const b = Array.from(right);
+    if (Math.abs(a.length - b.length) > limit) return limit + 1;
+    let previous = Array.from({ length: b.length + 1 }, (_, index) => index);
+    for (let i = 1; i <= a.length; i += 1) {
+      const current = [i];
+      let rowMinimum = i;
+      for (let j = 1; j <= b.length; j += 1) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        current[j] = Math.min(current[j - 1] + 1, previous[j] + 1, previous[j - 1] + cost);
+        rowMinimum = Math.min(rowMinimum, current[j]);
+      }
+      if (rowMinimum > limit) return limit + 1;
+      previous = current;
+    }
+    return previous[b.length];
+  }
+
+  function itemSearchWords(item) {
+    return splitSearchWords([item.title, item.pageTitle, item.desc, item.terms].filter(Boolean).join(' '));
+  }
+
+  function tokenMatchScore(token, words) {
+    if (!token) return 0;
+    let best = 0;
+    for (const word of words) {
+      if (word === token) best = Math.max(best, 8);
+      else if (word.includes(token) || token.includes(word) && word.length >= 3) best = Math.max(best, 5);
+      else if (token.length >= 4 && word.length >= 4) {
+        const tolerance = token.length >= 8 ? 2 : 1;
+        const distance = editDistance(token, word, tolerance);
+        if (distance <= tolerance) best = Math.max(best, 3 - distance);
+      }
+      if (best >= 8) break;
+    }
+    return best;
+  }
+
   /* صفحهٔ پنهان جلسه‌ها */
   const sessionPage = number => `#jalase-${number}`;
   const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم', 8: 'هشتم', 9: 'نهم', 10: 'دهم', 11: 'یازدهم', 12: 'دوازدهم' };
   const availableSessions = new Set();
+  if (indexLoaded) index.forEach(item => { if (Number.isInteger(item.session) && item.session > 0) availableSessions.add(item.session); });
   const sessionLabel = number => sessionNames[number] || Number(number).toLocaleString('fa-IR');
   const sessionWords = {
     '1':1,'یک':1,'اول':1,'یکم':1, '2':2,'دو':2,'دوم':2, '3':3,'سه':3,'سوم':3,
     '4':4,'چهار':4,'چهارم':4, '5':5,'پنج':5,'پنجم':5,
     '6':6,'شش':6,'ششم':6,'ششمی':6, '7':7,'هفت':7,'هفتم':7,'هفتمی':7,
-    '8':8,'هشت':8,'هشتم':8,'هشتمی':8, '9':9,'نه':9,'نهم':9,'نهمی':9
+    '8':8,'هشت':8,'هشتم':8,'هشتمی':8, '9':9,'نه':9,'نهم':9,'نهمی':9,
+    '10':10,'ده':10,'دهم':10,'دهمی':10, '11':11,'یازده':11,'یازدهم':11,
+    '12':12,'دوازده':12,'دوازدهم':12
   };
-  const sessionTags = {
-    'احکام1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(1)'}, 'اعتقادی1':{n:1,focus:'#jalase-1 > section.idea-section:nth-of-type(2)'},
-    'احکام2':{n:2,focus:'#jalase-2 > section.idea-section:nth-of-type(1)'}, 'ارتباطموثر1':{n:2,focus:'#jalase-2 > section.idea-section:nth-of-type(2)'},
-    'احکام3':{n:3,focus:'#jalase-3 > section.idea-section:nth-of-type(1)'}, 'رشدفردی1':{n:3,focus:'#jalase-3 > section.idea-section:nth-of-type(2)'},
-    'احکام4':{n:4,focus:'#jalase-4 > section.idea-section:nth-of-type(1)'}, 'ارتباطموثر2':{n:4,focus:'#jalase-4 > section.idea-section:nth-of-type(2)'},
-    'احکام5':{n:5,focus:'#jalase-5 > section.idea-section:nth-of-type(1)'}, 'رشدفردی2':{n:5,focus:'#jalase-5 > section.idea-section:nth-of-type(2)'},
-    'احکام6':{n:6,focus:'#jalase-6 > section.idea-section:nth-of-type(1)'}, 'اعتقادی2':{n:6,focus:'#jalase-6 > section.idea-section:nth-of-type(2)'},
-    'احکام7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'}, 'همسایهداری7':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(1)'},
-    'ارتباطموثر3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'}, 'فنبیان3':{n:7,focus:'#jalase-7 > section.idea-section:nth-of-type(2)'},
-    'احکام8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(1)'}, 'همسایهداری8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(1)'},
-    'رشدفردی3':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'}, 'لذت8':{n:8,focus:'#jalase-8 > section.idea-section:nth-of-type(2)'},
-    'احکام9':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(1)'}, 'همسایهداری9':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(1)'},
-    'ارتباطموثر4':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(2)'}, 'فنبیان4':{n:9,focus:'#jalase-9 > section.idea-section:nth-of-type(2)'}
+  const sessionTags = new Map([
+    ['#احکام_1', 1, 1],
+    ['#اعتقادی_1', 1, 2],
+    ['#احکام_2', 2, 1],
+    ['#ارتباط_موثر_1', 2, 2],
+    ['#احکام_3', 3, 1],
+    ['#رشد_فردی_1', 3, 2],
+    ['#احکام_4', 4, 1],
+    ['#ارتباط_موثر_2', 4, 2],
+    ['#احکام_5', 5, 1],
+    ['#رشد_فردی_2', 5, 2],
+    ['#احکام_6', 6, 1],
+    ['#اعتقادی_2', 6, 2],
+    ['#احکام_7', 7, 1],
+    ['#احکام_۷', 7, 1],
+    ['#همسایه_داری_7', 7, 1],
+    ['#ارتباط_موثر_3', 7, 2],
+    ['#ارتباط_مؤثر_3', 7, 2],
+    ['#فن_بیان_3', 7, 2],
+    ['#احکام_8', 8, 1],
+    ['#همسایه_داری_8', 8, 1],
+    ['#رشد_فردی_3', 8, 2],
+    ['#لذت', 8, 2],
+    ['#رنج', 8, 2],
+    ['#حواس_پرتی', 8, 2],
+    ['#احکام_9', 9, 1],
+    ['#همسایه_داری_9', 9, 1],
+    ['#ارتباط_موثر_4', 9, 2],
+    ['#فن_بیان_4', 9, 2],
+    ['#توصیف_کردن', 9, 2],
+    ['#بش_برس', 9, 2],
+    ['#احکام_10', 10, 1],
+    ['#احکام_۱۰', 10, 1],
+    ['#همسایه_داری_10', 10, 1],
+    ['#نگهداری_حیوانات', 10, 1],
+    ['#رشد_فردی_4', 10, 2],
+    ['#رشد_فردی_۴', 10, 2],
+    ['#محرک', 10, 2],
+    ['#وسوسه', 10, 2],
+    ['#تکنیک_۱۰_دقیقه', 10, 2]
+  ].map(([tag, n, section]) => [normalize(tag), { n, focus: `#jalase-${n} > section.idea-section:nth-of-type(${section})` }]));
+  /* نام کامل جلسه یا تگ دقیق محتوایی؛ عبارت ناقص «جلسه دهم» به‌تنهایی کافی نیست. */
+  const contentSessionTags = new Map();
+  document.querySelectorAll('.session-block .idea-section[data-search-tags]').forEach(section => {
+    const sessionBlock = section.closest('.session-block');
+    const number = Number((sessionBlock?.id || '').match(/jalase-(\d+)/)?.[1]);
+    if (!number) return;
+    const focus = `#${sessionBlock.id} > section.idea-section:nth-of-type(${Array.from(sessionBlock.querySelectorAll(':scope > .idea-section')).indexOf(section) + 1})`;
+    String(section.getAttribute('data-search-tags') || '').split(/\s+/).filter(Boolean).forEach(tag => {
+      const key = normalize(tag);
+      // تگ‌های شماره‌دارِ جلسه/کلاس شناسهٔ محتوایی نیستند؛ خودِ عبارت جلسه X جداگانه تشخیص داده می‌شود.
+      if (!key || /^(جلسه|کلاس)\d+$/.test(key)) return;
+      // در صورت تکرار یک تگ، اولین بخش مشخص حفظ شود تا مقصد ناخواسته عوض نشود.
+      if (!contentSessionTags.has(key)) contentSessionTags.set(key, { n: number, focus });
+    });
+  });
+  const sessionNumberFromWord = word => {
+    const token = normalize(word);
+    if (Object.prototype.hasOwnProperty.call(sessionWords, token)) return sessionWords[token];
+    const numeric = token.match(/^(\d{1,2})(?:ام|م)?$/);
+    return numeric ? Number(numeric[1]) : null;
   };
-  const matchSession = value => {
-    const normalized = normalize(value);
-    const match = normalized.match(/^(?:جلسه|کلاس)(?:ی)?(.+)$/);
-    if (!match) return null;
-    if (sessionWords[match[1]]) return sessionWords[match[1]];
-    const numeric = /^\d+$/.test(match[1]) ? Number(match[1]) : null;
-    return numeric && availableSessions.has(numeric) ? numeric : null;
-  };
-  const matchSessionTag = value => {
-    const normalized = normalize(value);
-    if (sessionTags[normalized]) return sessionTags[normalized];
-    const categoryTag = normalized.match(/^(احکام|اعتقادی|ارتباطموثر|رشدفردی|همسایهداری|فنبیان)(.+)$/);
-    if (categoryTag) {
-      const taggedNumber = sessionWords[categoryTag[2]] || (/^\d+$/.test(categoryTag[2]) && availableSessions.has(Number(categoryTag[2])) ? Number(categoryTag[2]) : null);
-      if (taggedNumber) {
-        const key = categoryTag[1] + taggedNumber;
-        if (sessionTags[key]) return sessionTags[key];
-        if (availableSessions.has(taggedNumber)) return { n: taggedNumber, focus: sessionPage(taggedNumber) };
+  const sessionParts = value => String(value || '')
+    .split(/[^\p{L}\p{N}]+/u)
+    .map(normalize)
+    .filter(Boolean);
+  const matchSessionName = value => {
+    const parts = sessionParts(value);
+    const ignored = new Set(['ی', 'شماره', 'شمارهی']);
+    for (let i = 0; i < parts.length; i += 1) {
+      const part = parts[i];
+      for (const marker of ['جلسه', 'کلاس']) {
+        const markerAt = part.indexOf(marker);
+        if (markerAt < 0) continue;
+        const attachedNumber = part.slice(markerAt + marker.length);
+        let number = attachedNumber ? sessionNumberFromWord(attachedNumber) : null;
+        if (!number) {
+          for (let j = i + 1; j < Math.min(parts.length, i + 5); j += 1) {
+            if (ignored.has(parts[j])) continue;
+            number = sessionNumberFromWord(parts[j]);
+            if (number) break;
+            // بعد از رسیدن به واژه‌ای دیگر، ادامهٔ عبارت را حدس نمی‌زنیم.
+            if (!/^\d+$/.test(parts[j])) break;
+          }
+        }
+        if (number && availableSessions.has(number)) return number;
       }
-    }
-    /* قبول تگ‌هایی مثل #جلسه_ششم، #کلاس-6 و #احکام_۶؛ # و جداکننده‌ها در normalize حذف شده‌اند. */
-    const named = normalized.match(/^(?:جلسه|کلاس)(.+)$/);
-    if (named) {
-      const namedNumber = sessionWords[named[1]] || (/^\d+$/.test(named[1]) && availableSessions.has(Number(named[1])) ? Number(named[1]) : null);
-      if (namedNumber) return { n: namedNumber, focus: sessionPage(namedNumber) };
     }
     return null;
   };
+  const matchSessionTag = value => {
+    // حذف #، ستاره، خط تیره، فاصله و نیم‌فاصله در normalize باعث می‌شود
+    // «احکام ۲»، «احکام 2» و «#احکام*2» یک شناسه داشته باشند.
+    const key = normalize(value);
+    return contentSessionTags.get(key) || sessionTags.get(key) || null;
+  };
+  const hasIncompleteSessionName = value => sessionParts(value)
+    .some(part => part === 'جلسه' || part === 'کلاس' || part.startsWith('جلسه') || part.startsWith('کلاس'));
   /* منطقهٔ دقیق برای فلش: کارت/ردیف/بخش/هدر */
   const REGION_SELECTOR = '.topic-row, .belief-card, .feature-card, .reason-card, .insight-card, .idea-section, .conclusion, .section, .page-hero';
 
@@ -145,10 +248,6 @@
     } catch (error) {
       samePage = href.charAt(0) === '#';
     }
-    /* یادداشت جلسه فقط با انتخاب نتیجه از خود جست‌وجو نمایش داده می‌شود. */
-    if (destination && destination.pathname.endsWith('/jalase.html') && /^#jalase-\d+$/.test(destination.hash)) {
-      try { sessionStorage.setItem('mh-session-access', destination.hash.slice(1)); } catch (error) { /* storage unavailable */ }
-    }
     if (samePage) {
       const hashIndex = href.indexOf('#');
       const hashChanged = hashIndex > -1 && window.location.hash !== href.slice(hashIndex);
@@ -193,22 +292,127 @@
     return indexLoading;
   }
 
-  /* بعد از انتخاب نتیجه: متن پاک، پنل بسته */
+  /* اتصال کنترل‌های جست‌وجو؛ رویدادها به‌صورت delegation برای همهٔ صفحات */
+  document.addEventListener('click', event => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target) return;
+
+    // انتخاب نتیجه با کلیک معمولی: پنجره بسته و مقصد همراه با نشانگر نتیجه باز شود.
+    const resultLink = target.closest('a.search-result');
+    if (resultLink && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      selectSearchResult(resultLink);
+      return;
+    }
+
+    const openButton = target.closest('[data-search-open]');
+    if (openButton) {
+      event.preventDefault();
+      openSearch(openButton);
+      return;
+    }
+    const closeButton = target.closest('[data-search-close]');
+    if (closeButton) {
+      event.preventDefault();
+      closeSearch();
+      return;
+    }
+    if (layer && !layer.hidden && target === layer) closeSearch();
+  });
+
+  input?.addEventListener('input', () => renderResults(input.value));
+  document.addEventListener('keydown', event => {
+    // Enter در ورودی جست‌وجو، اولین نتیجهٔ واقعی را باز می‌کند؛ پیشنهادهای متنی انتخاب مقصد نیستند.
+    if (event.key === 'Enter' && layer && !layer.hidden && event.target === input) {
+      const firstResult = results?.querySelector('a.search-result');
+      if (firstResult) {
+        event.preventDefault();
+        selectSearchResult(firstResult);
+        return;
+      }
+    }
+    if (event.key === 'Escape' && layer && !layer.hidden) {
+      event.preventDefault();
+      closeSearch();
+    }
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      if (layer?.hidden) openSearch();
+      else closeSearch();
+    }
+  });
+
+  /* بعد از انتخاب نتیجه: متن پاک، پنل بسته، سپس مقصد باز شود. */
   function finishSearch() {
     if (input) input.value = '';
     renderResults('');
     closeSearch(false);
   }
 
+  function selectSearchResult(link) {
+    if (!link) return;
+    const href = link.href || link.getAttribute('href');
+    if (!href) return;
+    const flashKey = link.dataset.flash || flashKeyFromHref(href);
+    finishSearch();
+    navigateWithFlash(href, flashKey);
+  }
+
+  function appendSuggestions(queryTokens) {
+    if (!results) return;
+    const suggestions = new Map();
+    if (!queryTokens.length) {
+      ['همسایه‌داری', 'تکنیک ۱۰ دقیقه', 'علم و حکمت', 'فن بیان'].forEach((label, order) => {
+        suggestions.set(label, 100 - order);
+      });
+    } else {
+      index.forEach(item => {
+        // نتایج آرشیو جلسه فقط با نام جلسه یا تگ شماره‌دار باز می‌شوند، نه پیشنهاد عمومی.
+        if (Number.isInteger(item.session)) return;
+        const title = String(item.title || '').trim();
+        if (!title || suggestions.has(title)) return;
+        const words = splitSearchWords(title);
+        const startsWithQuery = queryTokens.every(token => words.some(word => word.startsWith(token)));
+        if (startsWithQuery) suggestions.set(title, queryTokens.length * 10 + (item.level === 1 ? 2 : 0));
+      });
+    }
+    const rows = Array.from(suggestions.entries())
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'fa'))
+      .slice(0, 4);
+    if (!rows.length) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'search-suggestions';
+    wrap.setAttribute('aria-label', 'پیشنهادهای جست‌وجو');
+    const label = document.createElement('span');
+    label.className = 'search-suggestions-label';
+    label.textContent = 'جست‌وجوهای پیشنهادی';
+    wrap.append(label);
+    rows.forEach(([suggestion]) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'search-suggestion';
+      button.textContent = suggestion;
+      button.addEventListener('click', () => {
+        if (!input) return;
+        input.value = suggestion;
+        renderResults(suggestion);
+        input.focus();
+      });
+      wrap.append(button);
+    });
+    results.append(wrap);
+  }
+
   function renderResults(value = '') {
     if (!results) return;
     const normalizedInput = normalize(value);
-    const tokens = value.trim().split(/\s+/).map(normalize).filter(Boolean);
+    const tokens = splitSearchWords(value);
     results.replaceChildren();
     if (!tokens.length) {
+      appendSuggestions([]);
       const hint = document.createElement('p');
       hint.className = 'search-hint';
-      hint.textContent = 'مثلاً: همسایه‌داری، علم و حکمت، هدف انسان';
+      hint.textContent = 'مثلاً: همسایه‌داری، تکنیک ۱۰ دقیقه، جلسه دهم یا فن بیان';
       results.append(hint);
       return;
     }
@@ -219,7 +423,7 @@
       results.append(hint);
       return;
     }
-    if (!indexLoaded && !matchSession(value) && !matchSessionTag(value)) {
+    if (!indexLoaded) {
       const hint = document.createElement('p');
       hint.className = 'search-hint';
       hint.textContent = 'در حال آماده‌سازی جست‌وجوی کامل…';
@@ -228,8 +432,8 @@
       return;
     }
 
-    /* اول «جلسه X» → فلش روی کادر هدر جلسه */
-    const sessionNumber = matchSession(value);
+    /* اول نام جلسه با شماره/ترتیب: «جلسه هشتم»، «جلسه ۸»، «کلاس هشتم» و ... */
+    const sessionNumber = matchSessionName(value);
     if (sessionNumber) {
       const link = document.createElement('a');
       link.className = 'search-result';
@@ -248,7 +452,7 @@
       return;
     }
 
-    /* بعد تگ‌ها → فلش روی بخش دقیقِ مرتبط داخل صفحهٔ جلسه */
+    /* بعد تگ‌ها → رفتن به بخش موضوعی دقیق */
     const sessionTag = matchSessionTag(value);
     if (sessionTag) {
       const link = document.createElement('a');
@@ -268,33 +472,43 @@
       return;
     }
 
-    const bestPerPageTitle = new Map();
+    if (hasIncompleteSessionName(value)) {
+      // «جلسه» یا «جلسه ...» ناقص است: نتیجه و پیشنهاد عمومی نشان داده نمی‌شود.
+      return;
+    }
+
+    /* پیشنهادهای مرتبط فقط برای جست‌وجوی عمومی؛ آرشیوها در این فهرست نیستند. */
+    appendSuggestions(tokens);
+
+    const bestPerLocation = new Map();
     index.forEach(item => {
-      const titleText = normalize(item.title || '');
-      const pageText = normalize(item.pageTitle || '');
-      const haystack = normalize(`${item.title || ''} ${item.desc || ''} ${item.terms || ''} ${item.pageTitle || ''}`);
-      const ok = tokens.every(token => haystack.includes(token));
-      if (!ok) return;
-      const descText = normalize(item.desc || '');
-      const titleHits = tokens.filter(token => titleText.includes(token)).length;
-      const descHits = tokens.filter(token => descText.includes(token)).length;
-      const pageHits = tokens.filter(token => pageText.includes(token)).length;
-      const exactPhrase = normalizedInput && haystack.includes(normalizedInput) ? 7 : 0;
-      const score = titleHits * 10 + descHits * 7 + pageHits * 2 + (item.level === 1 ? 14 : 0) + exactPhrase + tokens.length;
+      // آرشیو جلسه در جست‌وجوی عمومی دسته‌ها (مثلاً «احکام») پخش نشود.
+      if (Number.isInteger(item.session)) return;
+      const words = itemSearchWords(item);
+      const tokenScores = tokens.map(token => tokenMatchScore(token, words));
+      if (tokenScores.some(score => score === 0)) return;
+      const titleWords = splitSearchWords(item.title || '');
+      const pageWords = splitSearchWords(item.pageTitle || '');
+      const titleHits = tokens.reduce((sum, token) => sum + (tokenMatchScore(token, titleWords) > 0 ? 1 : 0), 0);
+      const pageHits = tokens.reduce((sum, token) => sum + (tokenMatchScore(token, pageWords) > 0 ? 1 : 0), 0);
+      const exactPhrase = normalizedInput && normalize(`${item.title || ''} ${item.desc || ''}`).includes(normalizedInput) ? 9 : 0;
+      const score = tokenScores.reduce((sum, points) => sum + points, 0) + titleHits * 9 + pageHits * 3 +
+        (item.level === 1 ? 10 : 0) + exactPhrase;
       const page = (item.url || '').split('#')[0];
-      const key = page; // یک نتیجهٔ برتر برای هر صفحه، نه تکرار چندین قطعه از یک صفحه
+      const key = Number.isInteger(item.session) ? item.url : page;
       const candidate = { item, score };
-      const previous = bestPerPageTitle.get(key);
-      if (!previous || candidate.score > previous.score) bestPerPageTitle.set(key, candidate);
+      const previous = bestPerLocation.get(key);
+      if (!previous || candidate.score > previous.score) bestPerLocation.set(key, candidate);
     });
-    const matches = Array.from(bestPerPageTitle.values())
+
+    const matches = Array.from(bestPerLocation.values())
       .sort((a, b) => b.score - a.score || String(a.item.title).localeCompare(String(b.item.title), 'fa'))
-      .slice(0, 10)
+      .slice(0, 12)
       .map(row => row.item);
     if (!matches.length) {
       const hint = document.createElement('p');
       hint.className = 'search-hint';
-      hint.textContent = 'موضوعی با این عبارت پیدا نشد. عبارت دیگری را امتحان کن.';
+      hint.textContent = 'نتیجه‌ای پیدا نشد. املای عبارت را تغییر بده یا یکی از پیشنهادها را انتخاب کن.';
       results.append(hint);
       return;
     }
@@ -304,12 +518,12 @@
       const link = document.createElement('a');
       link.className = 'search-result';
       link.href = resolveSiteHref(item.url);
-      /* فلش دقیق: خودِ عنوان موضوع در صفحهٔ مقصد پیدا و منطقهٔ حاوی آن روشن می‌شود */
       link.dataset.flash = item.flash || ('text:' + item.title);
       const description = document.createElement('span');
-      description.append(document.createTextNode(item.title));
+      description.append(document.createTextNode(item.title || item.pageTitle || 'نتیجهٔ جست‌وجو'));
       const small = document.createElement('small');
-      small.textContent = item.desc;
+      const sessionText = Number.isInteger(item.session) ? ` · جلسهٔ ${sessionLabel(item.session)}` : '';
+      small.textContent = String(item.desc || item.pageTitle || '') + sessionText;
       description.append(small);
       const arrow = document.createElement('span');
       arrow.setAttribute('aria-hidden', 'true');
@@ -356,68 +570,81 @@
     menuButton.setAttribute('aria-label', isOpen ? 'بستن منوی اصلی' : 'باز کردن منوی اصلی');
   }
 
-  document.querySelectorAll('[data-search-open]').forEach(button => {
-    button.addEventListener('click', () => openSearch(button));
-  });
-  document.querySelectorAll('[data-search-close]').forEach(button => {
-    button.addEventListener('click', () => closeSearch());
-  });
-  layer?.addEventListener('click', event => {
-    if (event.target === layer) closeSearch();
-  });
-  input?.addEventListener('input', event => renderResults(event.target.value));
-
-  /* کلیک روی نتیجه: پاک و بسته، بعد ورود + فلش منطقهٔ دقیق */
-  results?.addEventListener('click', event => {
-    const link = event.target.closest('a.search-result');
-    if (!link) return;
-    event.preventDefault();
-    const href = link.getAttribute('href');
-    const key = link.dataset.flash || flashKeyFromHref(href);
-    finishSearch();
-    navigateWithFlash(href, key);
-  });
-
-  /* Enter: اولین نتیجه + فلش منطقهٔ دقیق */
-  input?.addEventListener('keydown', event => {
-    if (event.key === 'Enter') {
-      const first = results?.querySelector('a.search-result');
-      if (first) {
-        event.preventDefault();
-        const href = first.getAttribute('href');
-        const key = first.dataset.flash || flashKeyFromHref(href);
-        finishSearch();
-        navigateWithFlash(href, key);
+  /* پیمایش بین جلسه‌ها و نمایش تاریخ به‌روزرسانی */
+  function addSessionPagination(section, number, total) {
+    if (section.querySelector(':scope > .session-pagination')) return;
+    const navElement = document.createElement('nav');
+    navElement.className = 'session-pagination';
+    navElement.setAttribute('aria-label', 'پیمایش بین جلسه‌ها');
+    const makeLink = (target, text, className) => {
+      if (target < 1 || target > total) {
+        const disabled = document.createElement('span');
+        disabled.className = `${className} is-disabled`;
+        disabled.textContent = text;
+        disabled.setAttribute('aria-disabled', 'true');
+        return disabled;
       }
+      const link = document.createElement('a');
+      link.className = className;
+      link.href = `#jalase-${target}`;
+      link.dataset.sessionGo = String(target);
+      link.textContent = text;
+      return link;
+    };
+    navElement.append(
+      makeLink(number - 1, '← جلسهٔ قبلی', 'session-page-link'),
+      makeLink(number + 1, 'جلسهٔ بعدی →', 'session-page-link')
+    );
+    section.append(navElement);
+  }
+
+  function addLastUpdated() {
+    const footer = document.querySelector('.footer');
+    const dateValue = document.querySelector('meta[name="content-updated"]')?.content;
+    if (!footer || !dateValue || document.querySelector('.site-updated-wrap')) return;
+    const date = new Date(`${dateValue}T12:00:00`);
+    if (Number.isNaN(date.getTime())) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'site-updated-wrap';
+    const time = document.createElement('time');
+    time.className = 'site-updated';
+    time.dateTime = dateValue;
+    time.textContent = `آخرین به‌روزرسانی: ${date.toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+    wrapper.append(time);
+    footer.insertAdjacentElement('afterend', wrapper);
+  }
+
+  document.querySelectorAll('.session-block').forEach(section => {
+    const number = Number((section.id.match(/jalase-(\d+)/) || [])[1]);
+    if (Number.isInteger(number) && number > 0) {
+      addSessionPagination(section, number, document.querySelectorAll('.session-block').length);
+    }
+  });
+  addLastUpdated();
+
+  document.addEventListener('click', event => {
+    const sessionLink = event.target.closest('[data-session-go]');
+    if (!sessionLink) return;
+    event.preventDefault();
+    const destination = `#jalase-${sessionLink.dataset.sessionGo}`;
+    if (window.location.hash === destination) {
+      document.getElementById(destination.slice(1))?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+      });
+    } else {
+      window.location.hash = destination;
     }
   });
 
-  menuButton?.addEventListener('click', toggleMenu);
-  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMenu(false)));
-  document.addEventListener('click', event => {
-    const target = event.target;
-    if (nav?.classList.contains('is-open') && target instanceof Node && !nav.contains(target) && !menuButton?.contains(target)) {
-      closeMenu(false);
-    }
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      if (layer && !layer.hidden) closeSearch();
-      if (nav?.classList.contains('is-open')) closeMenu(true);
-    }
-    if ((event.ctrlKey || event.metaKey) && event.code === 'KeyK') {
-      event.preventDefault();
-      openSearch(document.querySelector('[data-search-open]'));
-    }
-    if (event.key === 'Tab' && layer && !layer.hidden && panel) {
-      const focusables = Array.from(panel.querySelectorAll('button, input, a[href], [tabindex]:not([tabindex="-1"])'))
-        .filter(element => !element.hasAttribute('disabled'));
-      if (!focusables.length) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    }
+  window.addEventListener('hashchange', () => {
+    if (!document.querySelector('.session-block')) return;
+    window.setTimeout(() => {
+      const activeSession = document.querySelector('.session-block:not([hidden])');
+      if (activeSession) {
+        document.title = `${activeSession.querySelector('.page-hero h2')?.textContent?.trim() || 'یادداشت جلسه'} | مهدیارشو`;
+        activeSession.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }
+    }, 50);
   });
 
   /* فلش منطقهٔ مقصد در صفحهٔ مقصد، بعد از ورود از جست‌وجو */

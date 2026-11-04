@@ -1975,3 +1975,95 @@ h1,h2,h3,p {
   .footer { border-top: 1px solid #ddd; }
   .quran-verse { color: #111 !important; }
 }
+
+/* پیمایش جلسه‌ها */
+.session-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 26px 0 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line2);
+}
+.session-page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border: 1px solid var(--line2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,.035);
+  color: var(--ink);
+  font-size: 12px;
+  text-decoration: none;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+.session-page-link:hover { border-color: rgba(110,201,188,.55); background: rgba(110,201,188,.09); color: var(--teal); }
+.session-page-link:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+.session-page-link.is-disabled { opacity: .38; cursor: not-allowed; }
+
+.site-updated-wrap {
+  width: min(calc(100% - 40px), 1180px);
+  margin: -8px auto 18px;
+  padding: 0 0 8px;
+  text-align: center;
+}
+.site-updated {
+  display: inline-block;
+  color: #8290a0;
+  font-size: 11px;
+}
+
+.search-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin: 2px 0 14px;
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--line2);
+}
+.search-suggestions-label {
+  flex: 0 0 100%;
+  color: #aab6c4;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.search-suggestion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  padding: 5px 12px;
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.025);
+  color: #c6d0dc;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+.search-suggestion:hover,
+.search-suggestion:focus-visible {
+  border-color: rgba(110,201,188,.48);
+  background: rgba(110,201,188,.09);
+  color: #fff;
+  outline: none;
+}
+.search-suggestion:focus-visible {
+  box-shadow: 0 0 0 2px rgba(110,201,188,.15);
+}
+
+@media (max-width: 600px) {
+  .session-pagination { gap: 8px; }
+  .session-page-link { flex: 1 1 calc(50% - 8px); font-size: 11px; }
+}
