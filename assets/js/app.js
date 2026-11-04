@@ -297,6 +297,26 @@
     const target = event.target instanceof Element ? event.target : null;
     if (!target) return;
 
+    // منوی موبایل: باز و بسته شدن دکمهٔ سه‌خطی در همهٔ صفحه‌ها.
+    const menuToggle = target.closest('[data-menu-toggle]');
+    if (menuToggle) {
+      event.preventDefault();
+      toggleMenu();
+      return;
+    }
+
+    // انتخاب پیوندهای منو در موبایل، منو را پیش از پیمایش می‌بندد.
+    const navLink = target.closest('.main-nav a');
+    if (navLink && window.matchMedia('(max-width: 760px)').matches && nav?.classList.contains('is-open')) {
+      closeMenu(false);
+      return;
+    }
+
+    // کلیک بیرون از منو، آن را می‌بندد.
+    if (nav?.classList.contains('is-open') && !target.closest('.main-nav')) {
+      closeMenu(false);
+    }
+
     // انتخاب نتیجه با کلیک معمولی: پنجره بسته و مقصد همراه با نشانگر نتیجه باز شود.
     const resultLink = target.closest('a.search-result');
     if (resultLink && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
