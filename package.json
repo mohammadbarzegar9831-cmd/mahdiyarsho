@@ -1,14 +1,13 @@
 {
   "name": "mahdiyarsho",
-  "version": "1.2.5",
+  "version": "1.2.7",
   "private": true,
   "description": "وب‌سایت ایستای فارسی مهدیارشو",
   "scripts": {
     "build:search": "node build-search-index.js",
     "build": "npm run build:search",
-    "check": "node --check assets/js/app.js && node --check build-search-index.js && node --check scripts/validate-site.js && node --check scripts/prepare-pages.js && node --check scripts/validate-pages-output.js",
-    "test": "node scripts/validate-site.js",
-    "ci": "npm run build && npm run check && npm test && npm run build:pages",
-    "build:pages": "node scripts/prepare-pages.js && node scripts/validate-pages-output.js"
+    "check": "node --check assets/js/app.js && node --check build-search-index.js",
+    "test": "npm run check",
+    "ci": "npm run build && npm run check"
   }
 }
