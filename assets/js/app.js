@@ -98,62 +98,7 @@
     '10':10,'ده':10,'دهم':10,'دهمی':10, '11':11,'یازده':11,'یازدهم':11,
     '12':12,'دوازده':12,'دوازدهم':12
   };
-  const sessionTags = new Map([
-    ['#احکام_1', 1, 1],
-    ['#اعتقادی_1', 1, 2],
-    ['#احکام_2', 2, 1],
-    ['#ارتباط_موثر_1', 2, 2],
-    ['#احکام_3', 3, 1],
-    ['#رشد_فردی_1', 3, 2],
-    ['#احکام_4', 4, 1],
-    ['#ارتباط_موثر_2', 4, 2],
-    ['#احکام_5', 5, 1],
-    ['#رشد_فردی_2', 5, 2],
-    ['#احکام_6', 6, 1],
-    ['#اعتقادی_2', 6, 2],
-    ['#احکام_7', 7, 1],
-    ['#احکام_۷', 7, 1],
-    ['#همسایه_داری_7', 7, 1],
-    ['#ارتباط_موثر_3', 7, 2],
-    ['#ارتباط_مؤثر_3', 7, 2],
-    ['#فن_بیان_3', 7, 2],
-    ['#احکام_8', 8, 1],
-    ['#همسایه_داری_8', 8, 1],
-    ['#رشد_فردی_3', 8, 2],
-    ['#لذت', 8, 2],
-    ['#رنج', 8, 2],
-    ['#حواس_پرتی', 8, 2],
-    ['#احکام_9', 9, 1],
-    ['#همسایه_داری_9', 9, 1],
-    ['#ارتباط_موثر_4', 9, 2],
-    ['#فن_بیان_4', 9, 2],
-    ['#توصیف_کردن', 9, 2],
-    ['#بش_برس', 9, 2],
-    ['#احکام_10', 10, 1],
-    ['#احکام_۱۰', 10, 1],
-    ['#همسایه_داری_10', 10, 1],
-    ['#نگهداری_حیوانات', 10, 1],
-    ['#رشد_فردی_4', 10, 2],
-    ['#رشد_فردی_۴', 10, 2],
-    ['#محرک', 10, 2],
-    ['#وسوسه', 10, 2],
-    ['#تکنیک_۱۰_دقیقه', 10, 2]
-  ].map(([tag, n, section]) => [normalize(tag), { n, focus: `#jalase-${n} > section.idea-section:nth-of-type(${section})` }]));
-  /* نام کامل جلسه یا تگ دقیق محتوایی؛ عبارت ناقص «جلسه دهم» به‌تنهایی کافی نیست. */
-  const contentSessionTags = new Map();
-  document.querySelectorAll('.session-block .idea-section[data-search-tags]').forEach(section => {
-    const sessionBlock = section.closest('.session-block');
-    const number = Number((sessionBlock?.id || '').match(/jalase-(\d+)/)?.[1]);
-    if (!number) return;
-    const focus = `#${sessionBlock.id} > section.idea-section:nth-of-type(${Array.from(sessionBlock.querySelectorAll(':scope > .idea-section')).indexOf(section) + 1})`;
-    String(section.getAttribute('data-search-tags') || '').split(/\s+/).filter(Boolean).forEach(tag => {
-      const key = normalize(tag);
-      // تگ‌های شماره‌دارِ جلسه/کلاس شناسهٔ محتوایی نیستند؛ خودِ عبارت جلسه X جداگانه تشخیص داده می‌شود.
-      if (!key || /^(جلسه|کلاس)\d+$/.test(key)) return;
-      // در صورت تکرار یک تگ، اولین بخش مشخص حفظ شود تا مقصد ناخواسته عوض نشود.
-      if (!contentSessionTags.has(key)) contentSessionTags.set(key, { n: number, focus });
-    });
-  });
+  /* تگ‌های محتوایی از نمایهٔ سراسری ساخته می‌شوند؛ به صفحهٔ جاری وابسته نیستند. */
   const sessionNumberFromWord = word => {
     const token = normalize(word);
     if (Object.prototype.hasOwnProperty.call(sessionWords, token)) return sessionWords[token];
@@ -188,12 +133,21 @@
     }
     return null;
   };
-  const matchSessionTag = value => {
-    // حذف #، ستاره، خط تیره، فاصله و نیم‌فاصله در normalize باعث می‌شود
-    // «احکام ۲»، «احکام 2» و «#احکام*2» یک شناسه داشته باشند.
-    const key = normalize(value);
-    return contentSessionTags.get(key) || sessionTags.get(key) || null;
-  };
+  const tagRoutes = new Map();
+  function refreshTagRoutes() {
+    tagRoutes.clear();
+    const routes = Array.isArray(window.MAHDIYARSHO_TAG_INDEX) ? window.MAHDIYARSHO_TAG_INDEX : [];
+    routes.forEach(route => {
+      const key = normalize(route.tag);
+      if (!key || /^(جلسه|کلاس)\d+$/.test(key)) return;
+      const current = tagRoutes.get(key);
+      const priority = Number(route.priority ?? 0);
+      if (!current || priority < Number(current.priority ?? 0)) tagRoutes.set(key, route);
+    });
+  }
+  if (indexLoaded) refreshTagRoutes();
+
+  const matchSessionTag = value => tagRoutes.get(normalize(value)) || null;
   const hasIncompleteSessionName = value => sessionParts(value)
     .some(part => part === 'جلسه' || part === 'کلاس' || part.startsWith('جلسه') || part.startsWith('کلاس'));
   /* منطقهٔ دقیق برای فلش: کارت/ردیف/بخش/هدر */
@@ -220,8 +174,15 @@
       try { el = document.querySelector(key); } catch (error) { el = null; }
       if (!el) el = document.querySelector('.page-hero');
       if (!el) return;
-      /* جست‌وجوی «جلسه X»: کل کادر هدر جلسه فلش می‌شود */
-      region = el.classList.contains('session-block') ? (el.querySelector('.page-hero') || el) : el;
+      /* تگ محتوایی: کل بخش مرتبط قاب می‌شود؛ نام جلسه: کل محتوای جلسه قاب می‌شود. */
+      const sessionBlock = el.closest('.session-block');
+      if (sessionBlock) {
+        region = el.classList.contains('session-block')
+          ? sessionBlock
+          : (el.closest('.idea-section') || sessionBlock);
+      } else {
+        region = el.closest('.idea-section') || el;
+      }
     }
     if (!region) return;
     region.classList.remove('flash-target');
@@ -271,6 +232,7 @@
       script.onload = () => {
         index = Array.isArray(window.MAHDIYARSHO_SEARCH_INDEX) ? window.MAHDIYARSHO_SEARCH_INDEX : [];
         index.forEach(item => { if (Number.isInteger(item.session) && item.session > 0) availableSessions.add(item.session); });
+        refreshTagRoutes();
         indexLoaded = true;
         indexLoading = null;
         renderResults(input?.value || '');
@@ -477,12 +439,12 @@
     if (sessionTag) {
       const link = document.createElement('a');
       link.className = 'search-result';
-      link.href = resolveSiteHref('jalase.html' + sessionPage(sessionTag.n));
-      link.dataset.flash = sessionTag.focus;
+      link.href = resolveSiteHref(sessionTag.url || ('jalase.html' + sessionPage(sessionTag.session || sessionTag.n)));
+      link.dataset.flash = sessionTag.flash || sessionTag.focus || (sessionTag.session ? `#jalase-${sessionTag.session}` : '.page-hero');
       const description = document.createElement('span');
-      description.append(document.createTextNode('یادداشت‌های جلسه / کلاس ' + sessionLabel(sessionTag.n)));
+      description.append(document.createTextNode(sessionTag.title || 'موضوع آموزشی مرتبط'));
       const small = document.createElement('small');
-      small.textContent = 'یادداشت‌های مرتبط با این موضوع';
+      small.textContent = sessionTag.session ? ('بخش مرتبط از جلسهٔ ' + sessionLabel(sessionTag.session)) : 'رفتن به بخش مرتبط';
       description.append(small);
       const arrow = document.createElement('span');
       arrow.setAttribute('aria-hidden', 'true');
