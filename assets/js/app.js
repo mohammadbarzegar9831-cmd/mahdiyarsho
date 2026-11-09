@@ -86,7 +86,7 @@
 
   /* صفحهٔ پنهان جلسه‌ها */
   const sessionPage = number => `#jalase-${number}`;
-  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم', 8: 'هشتم', 9: 'نهم', 10: 'دهم', 11: 'یازدهم', 12: 'دوازدهم' };
+  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم', 8: 'هشتم', 9: 'نهم', 10: 'دهم', 11: 'یازدهم', 12: 'دوازدهم', 13: 'سیزدهم' };
   const availableSessions = new Set();
   if (indexLoaded) index.forEach(item => { if (Number.isInteger(item.session) && item.session > 0) availableSessions.add(item.session); });
   const sessionLabel = number => sessionNames[number] || Number(number).toLocaleString('fa-IR');
@@ -96,7 +96,7 @@
     '6':6,'شش':6,'ششم':6,'ششمی':6, '7':7,'هفت':7,'هفتم':7,'هفتمی':7,
     '8':8,'هشت':8,'هشتم':8,'هشتمی':8, '9':9,'نه':9,'نهم':9,'نهمی':9,
     '10':10,'ده':10,'دهم':10,'دهمی':10, '11':11,'یازده':11,'یازدهم':11,
-    '12':12,'دوازده':12,'دوازدهم':12
+    '12':12,'دوازده':12,'دوازدهم':12, '13':13,'سیزده':13,'سیزدهم':13
   };
   /* تگ‌های محتوایی از نمایهٔ سراسری ساخته می‌شوند؛ به صفحهٔ جاری وابسته نیستند. */
   const sessionNumberFromWord = word => {
@@ -596,10 +596,25 @@
     footer.insertAdjacentElement('afterend', wrapper);
   }
 
-  document.querySelectorAll('.session-block').forEach(section => {
+  const sessionBlocks = Array.from(document.querySelectorAll('.session-block'));
+  function activateSessionFromHash() {
+    if (!sessionBlocks.length) return null;
+    const match = window.location.hash.match(/^#jalase-(\d+)$/);
+    const targetId = match ? `jalase-${Number(match[1])}` : '';
+    const activeSession = targetId ? sessionBlocks.find(section => section.id === targetId) || null : null;
+    sessionBlocks.forEach(section => { section.hidden = section !== activeSession; });
+    return activeSession;
+  }
+  // Only the session named by the URL is revealed; without a session hash the archive stays closed.
+  const initialSession = activateSessionFromHash();
+  if (initialSession) {
+    document.title = `${initialSession.querySelector('.page-hero h2')?.textContent?.trim() || 'یادداشت جلسه'} | مهدیارشو`;
+    window.setTimeout(() => initialSession.scrollIntoView({ block: 'start', behavior: 'auto' }), 0);
+  }
+  sessionBlocks.forEach(section => {
     const number = Number((section.id.match(/jalase-(\d+)/) || [])[1]);
     if (Number.isInteger(number) && number > 0) {
-      addSessionPagination(section, number, document.querySelectorAll('.session-block').length);
+      addSessionPagination(section, number, sessionBlocks.length);
     }
   });
   addLastUpdated();
@@ -619,9 +634,9 @@
   });
 
   window.addEventListener('hashchange', () => {
-    if (!document.querySelector('.session-block')) return;
+    if (!sessionBlocks.length) return;
     window.setTimeout(() => {
-      const activeSession = document.querySelector('.session-block:not([hidden])');
+      const activeSession = activateSessionFromHash();
       if (activeSession) {
         document.title = `${activeSession.querySelector('.page-hero h2')?.textContent?.trim() || 'یادداشت جلسه'} | مهدیارشو`;
         activeSession.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
