@@ -894,6 +894,20 @@ h1,h2,h3,p {
   color: var(--muted);
 }
 
+.hukm-label {
+  display: inline-flex;
+  align-items: center;
+  margin: 2px 0 8px;
+  padding: 2px 9px;
+  border: 1px solid rgba(248, 113, 113, .32);
+  border-radius: 999px;
+  background: rgba(127, 29, 29, .18);
+  color: #fca5a5;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
 .small-note {
   font-size: 10px !important;
   color: #778596 !important;
