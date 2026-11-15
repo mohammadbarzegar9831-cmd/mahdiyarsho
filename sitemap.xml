@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/ahkam.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/amr-marouf.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -26,13 +26,13 @@
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/elm-hekmat.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/hadaf.html</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -44,19 +44,19 @@
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/ertebat.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/fan-bayan.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/roshd.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -68,7 +68,7 @@
   </url>
   <url>
     <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/hamsaye-dari.html</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -77,5 +77,11 @@
     <lastmod>2026-11-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mohammadbarzegar9831-cmd.github.io/mahdiyarsho/gonahan-zabani.html</loc>
+    <lastmod>2026-11-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

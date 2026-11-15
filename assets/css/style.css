@@ -908,6 +908,12 @@ h1,h2,h3,p {
   line-height: 1.7;
 }
 
+.hukm-label.hukm-makruh {
+  border-color: rgba(251, 191, 36, .30);
+  background: rgba(120, 83, 12, .14);
+  color: #fcd34d;
+}
+
 .small-note {
   font-size: 10px !important;
   color: #778596 !important;
