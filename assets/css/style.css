@@ -914,6 +914,12 @@ h1,h2,h3,p {
   color: #fcd34d;
 }
 
+.hukm-label.hukm-halal {
+  border-color: rgba(52, 211, 153, .30);
+  background: rgba(6, 95, 70, .14);
+  color: #6ee7b7;
+}
+
 .small-note {
   font-size: 10px !important;
   color: #778596 !important;
