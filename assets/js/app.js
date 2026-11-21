@@ -9,6 +9,90 @@
 
   /* آیکون اختصاصی مرورگر از فایل‌های ثابت در HTML بارگذاری می‌شود. */
 
+  /* رفتار سراسری Back: ورود مستقیم به صفحهٔ داخلی یک مسیر بازگشت تا خانه ایجاد می‌کند. */
+  (function initSiteBackHistory() {
+    const canonical = document.querySelector('link[rel="canonical"]')?.href;
+    let siteRoot;
+    try { siteRoot = canonical ? new URL('./', canonical) : new URL('./', window.location.href); }
+    catch (error) { siteRoot = new URL('./', window.location.href); }
+    const homeUrl = new URL('index.html', siteRoot).href;
+    const current = new URL(window.location.href);
+    const path = current.pathname + current.search;
+    const originalHash = current.hash;
+    const isHome = current.pathname === siteRoot.pathname || /\/index\.html$/i.test(current.pathname);
+    const isAnswerPage = document.body?.dataset.answerPage === 'creation-question';
+    const currentIsInsideSite = value => {
+      try {
+        const url = new URL(value);
+        return url.origin === siteRoot.origin && url.pathname.startsWith(siteRoot.pathname);
+      } catch (error) { return false; }
+    };
+    const internalReferrer = currentIsInsideSite(document.referrer);
+    const navType = performance.getEntriesByType?.('navigation')?.[0]?.type || 'navigate';
+
+    // ورود مستقیم از بیرون: اول صفحهٔ فعلی، سپس نسخهٔ بدون بخشِ انتخاب‌شده، و در نهایت خانه.
+    if (!isHome && !internalReferrer && navType !== 'back_forward' && !history.state?.mhFallbackSentinel) {
+      history.replaceState({ mhFallbackSentinel: true }, '', path);
+      history.pushState({ mhPageTop: true }, '', path);
+      if (originalHash) {
+        history.pushState({ mhPageSection: true, mhAnswerSection: isAnswerPage && /^#answer-section-\d+$/.test(originalHash) }, '', path + originalHash);
+      }
+    } else if (!isHome && originalHash && originalHash !== '#top' && navType !== 'back_forward' && !history.state?.mhPageSection && !history.state?.mhAnswerSection && !history.state?.mhFallbackSentinel) {
+      // ورود داخلی به یک بخش از هر صفحه: Back اول به ابتدای همان صفحه برمی‌گردد.
+      // برای صفحهٔ پرسش، همین وضعیت باعث می‌شود Back از فهرست به ابتدای پاسخ برگردد.
+      history.replaceState({ mhPageTop: true }, '', path);
+      history.pushState({ mhPageSection: true, mhAnswerSection: isAnswerPage && /^#answer-section-\d+$/.test(originalHash) }, '', path + originalHash);
+    } else if (isAnswerPage && !current.hash && !history.state?.mhPageTop) {
+      // ورود داخلی به خود پرسش: ورودی ابتدای صفحه برای Back فهرست ثبت می‌شود.
+      history.replaceState({ mhPageTop: true }, '', path);
+    }
+
+    window.addEventListener('popstate', event => {
+      if (event.state?.mhFallbackSentinel && !isHome) {
+        window.location.replace(homeUrl);
+        return;
+      }
+      if (event.state?.mhPageTop) {
+        if (document.querySelector('.session-block')) {
+          document.querySelectorAll('.session-block').forEach(section => { section.hidden = true; });
+          const baseTitle = document.querySelector('meta[property="og:title"]')?.content;
+          if (baseTitle) document.title = baseTitle;
+        }
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        return;
+      }
+      if (event.state?.mhPageSection || event.state?.mhAnswerSection) {
+        const id = window.location.hash.slice(1);
+        const target = id ? document.getElementById(id) : null;
+        if (target) {
+          if (target.classList.contains('session-block')) {
+            document.querySelectorAll('.session-block').forEach(section => { section.hidden = section !== target; });
+            const title = target.querySelector('.page-hero h2')?.textContent?.trim();
+            if (title) document.title = `${title} | مهدیارشو`;
+          }
+          target.scrollIntoView({ block: 'start', behavior: 'auto' });
+        }
+      }
+    });
+
+    if (isAnswerPage) {
+      document.addEventListener('click', event => {
+        const link = event.target instanceof Element ? event.target.closest('a[data-answer-toc]') : null;
+        if (!link) return;
+        const hash = link.getAttribute('href') || '';
+        if (!/^#answer-section-\d+$/.test(hash)) return;
+        const target = document.getElementById(hash.slice(1));
+        if (!target) return;
+        event.preventDefault();
+        const nextUrl = path + hash;
+        const state = { mhPageSection: true, mhAnswerSection: true };
+        if (window.location.hash) history.replaceState(state, '', nextUrl);
+        else history.pushState(state, '', nextUrl);
+        target.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      });
+    }
+  })();
+
   let index = Array.isArray(window.MAHDIYARSHO_SEARCH_INDEX) ? window.MAHDIYARSHO_SEARCH_INDEX : [];
   let indexLoaded = index.length > 0;
   let indexLoading = null;
@@ -86,7 +170,7 @@
 
   /* صفحهٔ پنهان جلسه‌ها */
   const sessionPage = number => `#jalase-${number}`;
-  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم', 8: 'هشتم', 9: 'نهم', 10: 'دهم', 11: 'یازدهم', 12: 'دوازدهم', 13: 'سیزدهم', 14: 'چهاردهم', 15: 'پانزدهم', 16: 'شانزدهم', 17: 'هفدهم', 18: 'هجدهم', 19: 'نوزدهم', 20: 'بیستم' };
+  const sessionNames = { 1: 'اول', 2: 'دوم', 3: 'سوم', 4: 'چهارم', 5: 'پنجم', 6: 'ششم', 7: 'هفتم', 8: 'هشتم', 9: 'نهم', 10: 'دهم', 11: 'یازدهم', 12: 'دوازدهم', 13: 'سیزدهم', 14: 'چهاردهم', 15: 'پانزدهم', 16: 'شانزدهم', 17: 'هفدهم', 18: 'هجدهم', 19: 'نوزدهم', 20: 'بیستم', 21: 'بیست‌ویکم' };
   const availableSessions = new Set();
   if (indexLoaded) index.forEach(item => { if (Number.isInteger(item.session) && item.session > 0) availableSessions.add(item.session); });
   const sessionLabel = number => sessionNames[number] || Number(number).toLocaleString('fa-IR');
@@ -97,7 +181,7 @@
     '8':8,'هشت':8,'هشتم':8,'هشتمی':8, '9':9,'نه':9,'نهم':9,'نهمی':9,
     '10':10,'ده':10,'دهم':10,'دهمی':10, '11':11,'یازده':11,'یازدهم':11,
     '12':12,'دوازده':12,'دوازدهم':12, '13':13,'سیزده':13,'سیزدهم':13, '14':14,'چهارده':14,'چهاردهم':14,'چهاردهمی':14,
-    '15':15,'پانزده':15,'پانزدهم':15,'پانزدهمی':15, '16':16,'شانزده':16,'شانزدهم':16,'شانزدهمی':16, '17':17,'هفده':17,'هفدهم':17,'هفدهمی':17, '18':18,'هجده':18,'هجدهم':18,'هجدهمی':18, '19':19,'نوزده':19,'نوزدهم':19,'نوزدهمی':19, '20':20,'بیست':20,'بیستم':20,'بیستمی':20
+    '15':15,'پانزده':15,'پانزدهم':15,'پانزدهمی':15, '16':16,'شانزده':16,'شانزدهم':16,'شانزدهمی':16, '17':17,'هفده':17,'هفدهم':17,'هفدهمی':17, '18':18,'هجده':18,'هجدهم':18,'هجدهمی':18, '19':19,'نوزده':19,'نوزدهم':19,'نوزدهمی':19, '20':20,'بیست':20,'بیستم':20,'بیستمی':20, '21':21,'بیست‌ویکم':21,'بیستویکم':21,'بیست‌ویک':21
   };
   /* تگ‌های محتوایی از نمایهٔ سراسری ساخته می‌شوند؛ به صفحهٔ جاری وابسته نیستند. */
   const sessionNumberFromWord = word => {
@@ -121,7 +205,9 @@
         const attachedNumber = part.slice(markerAt + marker.length);
         let number = attachedNumber ? sessionNumberFromWord(attachedNumber) : null;
         if (!number) {
-          for (let j = i + 1; j < Math.min(parts.length, i + 5); j += 1) {
+          const following = parts.slice(i + 1, i + 4);
+          if (following[0] === 'بیست' && ((following[1] === 'و' && ['یک', 'یکم'].includes(following[2])) || ['ویک', 'ویکم'].includes(following[1]))) number = 21;
+          for (let j = i + 1; !number && j < Math.min(parts.length, i + 5); j += 1) {
             if (ignored.has(parts[j])) continue;
             number = sessionNumberFromWord(parts[j]);
             if (number) break;
