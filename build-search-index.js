@@ -145,15 +145,21 @@ function buildForFile(file) {
       const sessionStart = sessionStartAt(html, session);
       if (!heading || heading.offset < sessionStart) heading = firstSessionHeading(html, sessionStart) || heading;
     }
-    const itemTitle = isKicker ? pageTitle : heading?.text || pageTitle;
-    const itemDesc = node.text === itemTitle ? `${pageTitle} · ${node.text}` : shorten(node.text);
+    const sourceTitle = isKicker ? pageTitle : heading?.text || pageTitle;
+    const itemTitle = file === 'khoda-chera-man-ra-afaride.html'
+      ? sourceTitle.replace(/^اعتقادی\s*[۰-۹0-9]+\s*[·•–—-]\s*/u, '').trim()
+      : sourceTitle;
+    const displayNodeText = file === 'khoda-chera-man-ra-afaride.html'
+      ? node.text.replace(/^اعتقادی\s*[۰-۹0-9]+\s*[·•–—-]\s*/u, '').trim()
+      : node.text;
+    const itemDesc = shorten(displayNodeText);
     const item = {
       title: itemTitle,
       pageTitle,
       desc: itemDesc,
       url: session ? `jalase.html#jalase-${session}` : `${file}#${node.id}`,
       flash: `#${node.id}`,
-      terms: `${pageTitle} ${itemTitle} ${node.text}`
+      terms: `${pageTitle} ${sourceTitle} ${node.text}`
     };
     if (/^h[1-6]$/.test(node.tag)) item.level = Number(node.tag[1]);
     else item.level = 0;
